@@ -110,6 +110,7 @@ $(NAME): $(OBJ)
 
 clean:
 	@rm -rf $(OBJ)
+	@rm -rf $(OBJDIR)
 	@echo "\033[1;33mLibft object files removed!\033[0m"
 
 fclean: clean
