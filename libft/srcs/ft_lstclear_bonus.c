@@ -1,6 +1,6 @@
 
 
-#include "libft.h"
+#include "../includes/libft.h"
 
 /*
 ** #1. L’adresse du pointeur vers un élément.

@@ -1,5 +1,5 @@
 
-#include "libft.h"
+#include "../includes/libft.h"
 
 /*
 ** Itère sur la liste lst et applique la fonction f au contenu de chaque

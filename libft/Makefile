@@ -21,6 +21,7 @@ DEPS = $(INCPATH)/libft.h
 OBJDIR = srcs/objs
 
 SRCS =	srcs/ft_atoi.c \
+		srcs/ft_long_long_atoi.c \
 		srcs/ft_bzero.c \
 		srcs/ft_calloc.c \
 		srcs/ft_intlen_base.c \

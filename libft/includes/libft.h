@@ -6,7 +6,7 @@
 /*   By: jfreitas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/24 10:38:00 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/15 20:51:31 by whoami           ###   ########.fr       */
+/*   Updated: 2021/03/21 23:24:55 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_list
 }					t_list;
 
 int				ft_atoi(char const *str);
+long long int	ft_long_long_atoi(const char *str);
 void			ft_bzero(void *s, size_t n);
 void			*ft_calloc(size_t count, size_t size);
 int				ft_intlen_base(unsigned long n, int base);

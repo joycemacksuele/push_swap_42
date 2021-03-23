@@ -6,19 +6,22 @@
 #    By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/19 00:38:15 by jfreitas          #+#    #+#              #
-#    Updated: 2021/03/19 01:06:11 by jfreitas         ###   ########.fr        #
+#    Updated: 2021/03/23 02:02:48 by jfreitas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME1 = checker
+NAME1 = push_swap
 
-NAME2 = push_swap
+NAME2 = checker
 
 ##### COLORS #####
-BLUE = \033[1;35m
-GREY = \033[3;31m
-GREEN = \033[1;37m
+
+WHITE = \033[1;37m
+GREY = \033[1;30m
 RED = \033[1;31m
+GREEN = \033[1;32m
+YELLOW = \033[1;33m
+LIGHT_BLUE = \033[1;36m
 END = \033[0m
 
 ##### OSTYPE #####
@@ -35,6 +38,11 @@ endif
 CC = clang
 FLAGS = -Wall -Wextra -Werror -g# -fsanitize=address
 
+##### SRC & OBJ PATH #####
+LIBFTPATH = ./libft
+SRCPATH = ./srcs
+OBJPATH = $(SRCPATH)/objs
+
 ##### INCLUDE #####
 INC_PUSH_SWAP = ./includes
 INC_LIBFT = $(LIBFTPATH)/includes
@@ -46,50 +54,60 @@ INC_DEP = $(INC_PUSH_SWAP)/*.h
 ##### LIB #####
 LIBFT = $(LIBFTPATH)/libft.a
 
-##### SRC & OBJ PATH #####
-LIBFTPATH = ./libft
-SRCPATH = ./srcs
-OBJPATH = $(SRCPATH)/objs
-
 ##### SOURCES #####
-SRCS = $(addprefix $(SRCPATH)/,\
+SRCS_SWAP = $(addprefix $(SRCPATH)/, push_swap.c error.c manage_list.c)
+
+#SRCS_CHECKER = $(addprefix $(SRCPATH)/,\
 checker.c \
-push_swaap.c)
+func.c)
 
 ##### OBJECTS #####
-OBJS = $(SRCS:$(SRCPATH)/%.c=$(OBJPATH)/%.o)
+OBJS_SWAP = $(SRCS_SWAP:$(SRCPATH)/%.c=$(OBJPATH)/%.o)
+#OBJS_CHECKER = $(SRCS_CHECKER:$(SRCPATH)/%.c=$(OBJPATH)/%.o)
 
 #### RULES ####
-all: mk_objdir mk_libft $(NAME)
+all: mk_objdir mk_libft $(NAME1)#$(NAME2)
 
 mk_objdir:
 	@if [ ! -d $(OBJPATH) ]; then mkdir $(OBJPATH); fi
 
 mk_libft:
-	@echo "\n$(END)$(BLUE)# Making libft #$(GREY)$(END)"
 	@make -C $(LIBFTPATH)
 
-$(NAME): $(OBJS) $(INC_DEP)
-	@echo "\n$(END)$(BLUE)# Making $(NAME1) and $(NAME2) #$(GREY)$(END)"
-	$(CC) -o $@ $(OBJS) $(LIBFT)
-	@echo "\n$(END)$(GREEN)# $(NAME1) and $(NAME2) are built #$(END)"
+$(NAME1): $(OBJS_SWAP) $(INC_DEP)
+	@echo "\n$(END)$(LIGHT_BLUE)Making $(NAME1)$(END)"
+#	@$(CC) -o $@ $(OBJS_SWAP) $(LIBFT)
+	@$(CC) $(FLAGS) -o $(NAME1) $(OBJS_SWAP) $(LIBFT)
+	@echo "$(END)$(GREEN)$(NAME1) is built\n$(END)"
+
+#$(NAME2): $(OBJS_CHECKER) $(INC_DEP)
+#	@echo "\n$(END)$(LIGHT_BLUE)Making $(NAME2)$(END)"
+#	@$(CC) -o $@ $(OBJS_CHECKER) $(LIBFT)
+#	@$(CC) $(FLAGS) -o $(NAME1) $(OBJS_SWAP) $(LIBFT)
+#	@echo "$(END)$(GREEN)$(NAME2) is built$(END)"
 
 $(OBJPATH)/%.o: $(SRCPATH)/%.c $(INC_DEP)
-	$(CC) $(FLAGS) -I $(INC_LIBFT) -I $(INC_PUSH_SWAP) -c $< -o $@
+	@$(CC) $(FLAGS) -I $(INC_LIBFT) -I $(INC_PUSH_SWAP) -c $< -o $@
+# -c -> Run all of the above, + the assembler, generating a target .o object file.
+# $< is for the $(SRCPATH)/%.c part and $@ for the $(OBJPATH)/%.o part
 
 ### CLEAN ###
 .PHONY: clean fclean re
 
 clean:
-	@echo "$(END)$(RED)# Removing $(NAME1) and $(NAME2) object files #$(GREY)$(END)"
-	rm -rf $(OBJS)
-	@echo "$(END)$(RED)# Removing libft object files #$(END)"
+	@echo "$(END)$(YELLOW)Removing $(NAME1) object file$(END)"
+#	@echo "$(END)$(YELLOW)Removing $(NAME2) object file$(END)"
+	@rm -rf $(OBJPATH)
+#	@rm -rf $(OBJS_CHECKER)
+#	@echo "$(END)$(YELLOW)Removing libft object files$(END)"
 	@make clean -C $(LIBFTPATH)
 
 fclean: clean
-	@echo "$(END)$(RED)\n# removing $(NAME1) and $(NAME2) binaries #$(GREY)$(END)"
-	@rm -f $(NAME)
-	@echo "$(END)$(RED)\n# removing libft.a #$(END)"
+	@echo "$(END)$(YELLOW)\nRemoving $(NAME1) binary$(END)"
+#	@echo "$(END)$(YELLOW)\nRemoving $(NAME2) binary$(END)"
+	@rm -f $(NAME1)
+#	@rm -f $(NAME2)
+#	@echo "$(END)$(YELLOW)\nRemoving libft.a$(END)"
 	@make fclean -C $(LIBFTPATH)
 
 re: fclean all

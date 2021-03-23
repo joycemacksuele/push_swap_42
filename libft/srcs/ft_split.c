@@ -1,5 +1,5 @@
 
-#include "libft.h"
+#include "../includes/libft.h"
 
 int	split_counter(char const *s, char c)
 {
