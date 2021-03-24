@@ -6,7 +6,7 @@
 #    By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/19 00:38:15 by jfreitas          #+#    #+#              #
-#    Updated: 2021/03/23 02:02:48 by jfreitas         ###   ########.fr        #
+#    Updated: 2021/03/24 01:57:40 by jfreitas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,8 @@ INC_DEP = $(INC_PUSH_SWAP)/*.h
 LIBFT = $(LIBFTPATH)/libft.a
 
 ##### SOURCES #####
-SRCS_SWAP = $(addprefix $(SRCPATH)/, push_swap.c error.c manage_list.c)
+SRCS_SWAP = $(addprefix $(SRCPATH)/, push_swap.c error.c manage_list.c \
+list_functions.c sort_1.c)
 
 #SRCS_CHECKER = $(addprefix $(SRCPATH)/,\
 checker.c \

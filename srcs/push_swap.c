@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/23 02:07:22 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/03/23 23:59:13 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,33 @@
 /*Pour 3 values = normal: 1 or 2 ... max 3 opérations
 Pour 5 values = normal 5 to 9 and  max 12
 Pour 100 values = barème de 1 à 5
-  - moins de 700: 5
+  - moins de 700: 5 this one
   - moins de 900: 4
   - moins de 1100: 3
   - moins de 1300: 2
-  - moins de 1500: 1
+  - moins de 1500: 1:
 Pour 500 values = barème de 1 à 5
-  - moins de 5500: 5
+  - moins de 5300: 5 this one
   - moins de 7000: 4
   - moins de 8500: 3
   - moins de 10000: 2
   - moins de 11500: 1
 */
 
+
+void	pick_algo(t_lst **a, t_lst **b, int ac)
+{
+	if (ac == 3)
+		sort_1(a, b);
+/*	else if (ac <= 5)
+		sort_2();
+	else if (ac <= 100)
+		sort_3();
+	else if (ac <= 500)
+		sort_4();
+	else
+		sort_5();*/
+}
 
 /*
  * Looping av to check if the numbers of the arguments are sorted or not.
@@ -58,13 +72,9 @@ int	is_sort(char **av)
 
 int	main(int ac, char **av)
 {
-	t_list	*a;
-	t_list	*b;
-	int		v;
-	int		i;
+	t_lst	*a;
+	t_lst	*b;
 
-	v = 0;
-	i = 0;
 	a = NULL;
 	b = NULL;
 	if (ac <= 1)
@@ -80,10 +90,13 @@ int	main(int ac, char **av)
 			return (-1);
 		}
 		if (is_sort(av) == -1)
+		{
 			a = create_list(&av[1]);
+			pick_algo(&a, &b, ac - 1);
+		}
 /*		while (a != NULL)
 		{
-			printf("%s\n", a->content);
+			printf("%d\n", a->nb);
 			a = a->next;
 		}*/
 		if (a)

@@ -6,22 +6,22 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 02:01:49 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/23 02:04:31 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/03/24 01:55:54 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	free_list_a(t_list **a)
+void	free_list_a(t_lst **a_or_b)
 {
-	t_list	*tmp;
+	t_lst	*tmp;
 
-	if (!(*a))
+	if (!(*a_or_b))
 		return ;
-	while ((*a))
+	while ((*a_or_b))
 	{
-		tmp = *a;
-		*a = (*a)->next;
+		tmp = *a_or_b;
+		*a_or_b = (*a_or_b)->next;
 		free(tmp);
 		tmp = NULL;
 	}
@@ -36,26 +36,21 @@ void	free_list_a(t_list **a)
  * @args:
  *		char **av: the arguments of the program call.
  * @return:
- *		t_list *: a pointer to the head of the list (called a).
+ *		t_lst *: a pointer to the head of the list (called a).
  */
 
-t_list	*create_list(char **av)
+t_lst	*create_list(char **av)
 {
-	t_list	*a;
-	t_list	*a_tmp;
-	int		i;
+	t_lst	*a_or_b;
+	t_lst	*tmp;
 
-	i = 0;
-	a = NULL;
-	a_tmp = NULL;
+	a_or_b = NULL;
+	tmp = NULL;
 	while (*av != NULL)
 	{
-		a_tmp = ft_lstnew(*av);// or ft_strdup(*av)??
-		ft_lstadd_back(&a, a_tmp);
-	//	printf("list = %s\n", a->content);
+		tmp = lstnew(ft_atoi(*av));// or ft_strdup(*av)??
+		lstadd_back(&a_or_b, tmp);
 		av++;
 	}
-
-	return (a);
+	return (a_or_b);
 }
-

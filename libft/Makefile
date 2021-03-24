@@ -107,7 +107,7 @@ $(OBJDIR)/%.o : srcs/%.c $(DEPS)
 $(NAME): $(OBJ)
 	@echo "\033[1;36mBuilding Libft...\033[0m"
 	@ar rcs $@ $(OBJ)
-	@echo "\033[1;36m$@ is built!\033[0m"
+	@echo "\033[1;32m$@ is built!\033[0m"
 
 clean:
 	@rm -rf $(OBJ)

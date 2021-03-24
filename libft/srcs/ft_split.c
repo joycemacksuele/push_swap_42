@@ -29,7 +29,7 @@ static char const	*ternarie_ret(char const *s, char *adr)
 	return (s);
 }
 
-char	**ft_split_jb(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**tab;
 	char	*adr;

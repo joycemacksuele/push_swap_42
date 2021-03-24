@@ -6,7 +6,7 @@
 /*   By: jfreitas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/24 10:38:00 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/21 23:24:55 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/03/23 23:08:57 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,14 +102,12 @@ int				ft_tolower(int c);
 int				ft_toupper(int c);
 int				ft_islower(int c);
 int				ft_isupper(int c);
-/*
-** jb
-*/
-char			**ft_split_jb(char const *s, char c);
+
+char			**ft_split(char const *s, char c);
 int				join_newstr(char **str, const char *src);
 int				get_next_line(int fd, char **line);
-void			ft_lstadd_back(t_list **alst, t_list *new);
 void			ft_lstadd_front(t_list **alst, t_list *new);
+void			ft_lstadd_back(t_list **alst, t_list *new);
 t_list			*ft_lstlast(t_list *lst);
 t_list			*ft_lstnew(void *content);
 int				ft_lstsize(t_list *lst);
