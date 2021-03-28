@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 02:01:49 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/24 02:06:44 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/03/25 02:02:39 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	lstdelone(t_lst *lst)
 {
 	if (!lst)
 		return ;
-	free(&lst->nb);
+//	free(&lst->nb); int nb was ot allocated
 	free(lst);
 	lst = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:55:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/22 21:35:42 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/03/26 15:38:00 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,8 @@ int	not_int(char **av)
 	{
 		j = -1;
 		nb = ft_long_long_atoi(av[i]);
-	//	printf("%lld\n", nb);
 		while (++j < ft_strlen(av[i]))
 		{
-		//	printf("%c\n", av[i][j]);
 			if (av[i][j] == '-' || av[i][j] == '+')
 				j++;
 			if (av[i][j] && !(ft_isdigit(av[i][j])))
@@ -80,3 +78,12 @@ int	not_int(char **av)
 
 }
 
+int	handle_wrong_ac(int ac)
+{
+	if (ac <= 1)
+	{
+		ft_putstr_fd("More than 1 signed integer argument needed!\n", 2);
+		return (-1);
+	}
+	return (0);
+}

@@ -6,7 +6,7 @@
 #    By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/19 00:38:15 by jfreitas          #+#    #+#              #
-#    Updated: 2021/03/24 01:57:40 by jfreitas         ###   ########.fr        #
+#    Updated: 2021/03/26 22:22:21 by jfreitas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,9 @@ LIBFT = $(LIBFTPATH)/libft.a
 
 ##### SOURCES #####
 SRCS_SWAP = $(addprefix $(SRCPATH)/, push_swap.c error.c manage_list.c \
-list_functions.c sort_1.c)
+list_functions.c rotate_operations.c swap_and_push_operations.c \
+sort_max_12.c sort_max_100.c)
+
 
 #SRCS_CHECKER = $(addprefix $(SRCPATH)/,\
 checker.c \

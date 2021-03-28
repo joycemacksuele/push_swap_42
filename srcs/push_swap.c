@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/23 23:59:13 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/03/28 03:42:55 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,43 @@ Pour 500 values = barème de 1 à 5
 
 void	pick_algo(t_lst **a, t_lst **b, int ac)
 {
-	if (ac == 3)
-		sort_1(a, b);
-/*	else if (ac <= 5)
-		sort_2();
+	(void)b;
+	if (ac == 2 || ac == 3)
+		sort_max_3(a, 'a');
+	else if (ac <= 20)
+		sort_max_12(a, b);
 	else if (ac <= 100)
-		sort_3();
-	else if (ac <= 500)
-		sort_4();
+		sort_max_100(a, b);
+/*	else
+		sort_4();*/
+
+///// test
+	printf("------------ Sorted list a ------------\n");
+
+	printf("len a = %d\n", lstlen(a));
+	if ((*a))
+		printf("a\n-\n");
+	while (*a)
+	{
+		printf("%d\n", (*a)->nb);
+		(*a) = (*a)->next;
+	}
+
+	printf("------------ Sorted list b ------------\n");
+
+	printf("len b = %d\n", lstlen(b));
+	if (!(*b))
+		printf("List b is empty\n");
 	else
-		sort_5();*/
+		printf("b\n-\n");
+	while (*b)
+	{
+		printf("%d\n", (*b)->nb);
+		(*b) = (*b)->next;
+	}
+
+///// test
+
 }
 
 /*
@@ -75,13 +102,11 @@ int	main(int ac, char **av)
 	t_lst	*a;
 	t_lst	*b;
 
+	g_count_operations = 0;
 	a = NULL;
 	b = NULL;
-	if (ac <= 1)
-	{
-		ft_putstr_fd("Signed integer argument needed!\n", 2);
+	if (handle_wrong_ac(ac) == -1)
 		return (-1);
-	}
 	else if (ac >= 2)
 	{
 		if (not_int(av) == -1 || find_doubles(av) == -1)
@@ -94,13 +119,9 @@ int	main(int ac, char **av)
 			a = create_list(&av[1]);
 			pick_algo(&a, &b, ac - 1);
 		}
-/*		while (a != NULL)
-		{
-			printf("%d\n", a->nb);
-			a = a->next;
-		}*/
-		if (a)
-			free_list_a(&a);
+		free_list(&a);
+		free_list(&b);
 	}
+	printf("NUMBER OF REGISTERS = %d\n", g_count_operations);
 	return (0);
 }
