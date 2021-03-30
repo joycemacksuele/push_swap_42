@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/28 03:35:46 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/03/28 17:12:36 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	sort_max_12(t_lst **a, t_lst **b)
 	int		len;
 	int		i;
 
-	while (lst_is_sort(*a) == -1 && (len = lstlen(a)) > 3)
+	while (lst_is_sort((*a), 0) == -1 && (len = lstlen(a)) > 3)
 	{
 		lower = (*a);
 		i = 0;
@@ -73,7 +73,7 @@ void	sort_max_12(t_lst **a, t_lst **b)
 			else if (i > len / 2)
 				rra_rrb(a, 'a', 1);
 		}
-		if (lst_is_sort(*a) == -1)
+		if (lst_is_sort((*a), 0) == -1)
 			pb(a, b, 1);
 	}
 	sort_max_3(a, 'a');
@@ -93,7 +93,7 @@ void	sort_max_3(t_lst **lst, char a_or_b)
 		sa_sb(lst, a_or_b, 1);
 	else if (lstlen(lst) == 3)
 	{
-		while (lst_is_sort(*lst) == -1)
+		while (lst_is_sort((*lst), 0) == -1)
 		{
 			if ((*lst)->nb > (*lst)->next->nb &&
 			(*lst)->nb > (*lst)->next->next->nb)

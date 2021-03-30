@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 02:13:20 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/28 03:38:45 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/03/28 17:22:24 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	pb(t_lst **a, t_lst **b, int fd)
 		if ((*a)->next)
 			(*a) = (*a)->next;
 		else
-			free_list(a);
+			free_lst(a);
 		//	(*a) = NULL;
 
 	/*	// test -------------------
@@ -120,7 +120,7 @@ void	pa(t_lst **a, t_lst **b, int fd)
 		if ((*b)->next)
 			(*b) = (*b)->next;
 		else
-			free_list(b);
+			free_lst(b);
 		//	(*b) = NULL;
 
 	/*	//test ------------------

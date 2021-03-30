@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/28 03:29:05 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/03/28 17:13:07 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	sort_b(t_lst **b)
 	tmp = (*b);
 	lower = (*b);
 	search_lower_number(&lower, -1, -1);
-	while (lst_is_sort_reverse((*b)) == -1)
+	while (lst_is_sort((*b), -1) == -1)
 	{
 		if (tmp->next && tmp->nb < tmp->next->nb && tmp->nb != lower->nb)
 			sa_sb(b, 'b', 1);
@@ -103,13 +103,13 @@ void	chunks(t_lst **a, t_lst **b, int chunck_end)
 			else if (i1 >= ((lstlen(a) - 1) - i2))
 				rra_rrb(a, 'a', 1);
 		}
-		if (lst_is_sort(*a) == -1)
+		if (lst_is_sort((*a), 0) == -1)
 		{
 			if (!(*a)->next->next)
 				sa_sb(a, 'a', 1);
 			pb(a, b, 1);
 		}
-		else if (lst_is_sort(*a) == 0 && lstlen(b) < chunck_end)
+		else if (lst_is_sort((*a), 0) == 0 && lstlen(b) < chunck_end)
 			pb(a, b, 1);
 	//	printf("head of b = %d\n", (*b)->nb);
 	//	printf("length of b = %d\n", lstlen(b));

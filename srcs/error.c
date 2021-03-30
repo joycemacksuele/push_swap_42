@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:55:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/26 15:38:00 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/03/28 17:50:24 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	not_int(char **av)
 		}
 		if (nb > 2147483647 || nb < -2147483648 || ft_strlen(av[i]) > 11)
 		{
-			printf("bigger than int\n");
+		//	printf("bigger than int\n");
 			return (-1);
 		}
 		i++;

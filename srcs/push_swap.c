@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/28 03:42:55 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/03/28 18:00:31 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ Pour 500 values = barème de 1 à 5
   - moins de 11500: 1
 */
 
-
 void	pick_algo(t_lst **a, t_lst **b, int ac)
 {
 	(void)b;
@@ -49,7 +48,7 @@ void	pick_algo(t_lst **a, t_lst **b, int ac)
 		printf("a\n-\n");
 	while (*a)
 	{
-		printf("%d\n", (*a)->nb);
+		printf("%d\n", (int)(*a)->nb);
 		(*a) = (*a)->next;
 	}
 
@@ -62,39 +61,11 @@ void	pick_algo(t_lst **a, t_lst **b, int ac)
 		printf("b\n-\n");
 	while (*b)
 	{
-		printf("%d\n", (*b)->nb);
+		printf("%d\n", (int)(*b)->nb);
 		(*b) = (*b)->next;
 	}
 
 ///// test
-
-}
-
-/*
- * Looping av to check if the numbers of the arguments are sorted or not.
- * Obs.: atoi can be used because if has already passed the error functions,
- * so if itgot here, it means that the arguments are indeed not duplicated
- * signed intergers.
- *
- * @args:
- *		char **av: the arguments of the program call.
- * @return:
- *		int: 0 is it's sorted and -1 if it's not sorted.
- */
-
-int	is_sort(char **av)
-{
-	int	i;
-
-	i = 1;
-	while (av[i])
-	{
-		if (av[i + 1] && ft_atoi(av[i]) > ft_atoi(av[i + 1]))
-			return (-1);
-		i++;
-	}
-	ft_putstr_fd("Numbers are already sorted!\n", 2);
-	return (0);
 }
 
 int	main(int ac, char **av)
@@ -116,11 +87,11 @@ int	main(int ac, char **av)
 		}
 		if (is_sort(av) == -1)
 		{
-			a = create_list(&av[1]);
+			a = create_lst(&av[1]);
 			pick_algo(&a, &b, ac - 1);
 		}
-		free_list(&a);
-		free_list(&b);
+		free_lst(&a);
+		free_lst(&b);
 	}
 	printf("NUMBER OF REGISTERS = %d\n", g_count_operations);
 	return (0);

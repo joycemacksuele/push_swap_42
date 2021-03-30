@@ -6,109 +6,94 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 02:01:49 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/28 00:15:52 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/03/30 02:26:42 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	lstlen(t_lst **lst)
+void	free_list(t_list **operations)
 {
-	int		len;
-	t_lst	*tmp;
+	t_list	*tmp;
 
-	len = 0;
-	if (*lst)
-	{
-		tmp = *lst;
-		while (tmp)
-		{
-			len++;
-			tmp = tmp->next;
-		}
-	}
-	return (len);
-}
-
-void	free_list(t_lst **a_or_b)
-{
-	t_lst	*tmp;
-
-	if (!(*a_or_b))
+	if (!(*operations))
 		return ;
-	while ((*a_or_b))
+	while ((*operations))
 	{
-		tmp = *a_or_b;
+		tmp = *operations;
 	//	free(&(*a_or_b)->nb); ???? int nb was not allocated
-		*a_or_b = (*a_or_b)->next;
+		*operations = (*operations)->next;
 		free(tmp);
 		tmp = NULL;
 	}
 }
 
-int	lst_is_sort_reverse(t_lst *a_or_b)
+/*void	lstadd_front_opts(t_opts **a_or_b, t_opts *new)
 {
-	while (a_or_b)
-	{
-
-// FOR TESTIG ---------------------------------------
-	//	printf("%d\n", a_or_b->nb);
-	//	printf("first = %d\n", a_or_b->nb);
-// ---------------------------------------------------
-
-		if (a_or_b->next && a_or_b->nb < a_or_b->next->nb)
-			return (-1);
-		a_or_b = a_or_b->next;
-	}
-// FOR TESTIG ---------------------------------------
-//	printf("lst is sorted!!!!\n");
-// --------------------------------------------------
-	return (0);
+	if (!new)
+		return ;
+	new->next = *a_or_b;
+	*a_or_b = new;
 }
 
-int	lst_is_sort(t_lst *a_or_b)
+
+t_opts	*lstlast_opts(t_opts *a_or_b)
 {
-	while (a_or_b)
-	{
-
-// FOR TESTIG ---------------------------------------
-	//	printf("%d\n", a_or_b->nb);
-	//	printf("first = %d\n", a_or_b->nb);
-// ---------------------------------------------------
-
-		if (a_or_b->next && a_or_b->nb > a_or_b->next->nb)
-			return (-1);
+	if (!a_or_b)
+		return (NULL);
+	while (a_or_b->next)
 		a_or_b = a_or_b->next;
-	}
-// FOR TESTIG ---------------------------------------
-//	printf("lst is sorted!!!!\n");
-// --------------------------------------------------
-	return (0);
+	return (a_or_b);
 }
+
+void	lstadd_back_opts(t_opts **a_or_b, t_opts *tmp)
+{
+	t_opts	*last;
+
+	last = lstlast_opts(*a_or_b);
+	if (!tmp)
+		return ;
+	if (!last)
+		lstadd_front_opts(a_or_b, tmp);
+	else
+		last->next = tmp;
+}
+
+t_opts	*lstnew_opts(char *line)
+{
+	t_opts	*new;
+
+	new = (t_opts *)malloc(sizeof(t_opts));
+	if (!new)
+		return (NULL);
+	new->opt = line;
+	new->next = NULL;
+	return (new);
+}*/
+
 
 /*
- * Create and store arguments in a linked list from  av variable (argv).
+ * Create and store the output of the push_swap program in a linked list.
  * All the links of the list are malloc() and should be free() once the program
  * exit.
  *
  * @args:
- *		char **av: the arguments of the program call.
+ *		char *line: the line from the input (read by get_next_line).
  * @return:
- *		t_lst *: a pointer to the head of the list (called a).
+ *		t_list *: a pointer to the head of the list (called operations).
  */
 
-t_lst	*create_list(char **av)
+t_list	*create_list_with_operations(char *line)
 {
-	t_lst	*a_or_b;
-	t_lst	*tmp;
+	t_list	*operations;
+	t_list	*tmp;
 
-	a_or_b = NULL;
+	operations = NULL;
 	tmp = NULL;
-	while (*av != NULL)
+	if (line)
 	{
-		tmp = lstnew(ft_atoi(*av));// or ft_strdup(*av)??
-		lstadd_back(&a_or_b, tmp);
-		av++;
+		tmp = ft_lstnew(line);// or ft_strdup(*av)??
+		ft_lstadd_back(&operations, tmp);
 	}
-	return (a_or_b);
+	return (operations);
 }
