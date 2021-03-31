@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/28 18:00:31 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/03/31 17:23:24 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ Pour 500 values = barème de 1 à 5
 
 void	pick_algo(t_lst **a, t_lst **b, int ac)
 {
-	(void)b;
 	if (ac == 2 || ac == 3)
 		sort_max_3(a, 'a');
 	else if (ac <= 20)

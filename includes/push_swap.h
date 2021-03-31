@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 02:13:33 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/30 02:28:58 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/03/31 16:45:00 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	rrr(t_lst **a, t_lst **b, int fd);
 void	checker(t_lst **a, t_lst **b, int ac);
 
 /* checker list management */
-t_list	*create_list_with_operations(char *line);
+t_list	*create_list(char **line);
 void	free_list(t_list **operations);
 
 #endif

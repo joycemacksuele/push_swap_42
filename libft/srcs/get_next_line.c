@@ -10,6 +10,7 @@ int	get_next_line(int fd, char **line)
 		|| fd > MAX_FD || read(fd, buf[fd], 0) == -1)
 		return (-1);
 	*line = ft_strnew(0);
+	adr = NULL;
 	if (!*line)
 		return (0);
 	adr = ft_strchr(buf[fd], '\n');
@@ -20,6 +21,7 @@ int	get_next_line(int fd, char **line)
 		ft_memset(buf[fd], 0, BUFFER_SIZE);
 		if (!(read(fd, buf[fd], BUFFER_SIZE)))
 			return (0);
+		adr = ft_strchr(buf[fd], '\n');
 	}
 	*adr = 0;
 	if (!(join_newstr(line, buf[fd])))
