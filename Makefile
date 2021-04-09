@@ -6,7 +6,7 @@
 #    By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/19 00:38:15 by jfreitas          #+#    #+#              #
-#    Updated: 2021/03/31 20:04:38 by jfreitas         ###   ########.fr        #
+#    Updated: 2021/04/01 01:21:26 by jfreitas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,8 +58,8 @@ LIBFT = $(LIBFTPATH)/libft.a
 SRCS = $(addprefix $(SRCPATH)/, error.c utils.c manage_lst.c lst_functions.c \
 rotate_operations.c swap_and_push_operations.c)
 
-SRCS_SWAP = $(addprefix $(SRCPATH)/, push_swap.c manage_lst.c lst_functions.c \
-sort_max_12.c sort_max_100.c)
+SRCS_SWAP = $(addprefix $(SRCPATH)/, push_swap.c sort_max_12.c sort_max_100.c \
+sort_max_500.c)
 
 SRCS_CHECKER = $(addprefix $(SRCPATH)/, checker.c manage_list.c)
 
@@ -80,13 +80,13 @@ mk_libft:
 $(NAME1): $(OBJS_SWAP) $(OBJS_SRCS) $(INC_DEP)
 	@echo "\n$(END)$(LIGHT_BLUE)Making $(NAME1)$(END)"
 #	@$(CC) -o $@ $(OBJS_SWAP) $(LIBFT)
-	@$(CC) $(FLAGS) -o $(NAME1) $(OBJS_SWAP) $(OBJS_SRCS) $(LIBFT)
+	@$(CC) $(FLAGS) -o $(NAME1) $(OBJS_SRCS) $(OBJS_SWAP) $(LIBFT)
 	@echo "$(END)$(GREEN)$(NAME1) is built\n$(END)"
 
 $(NAME2): $(OBJS_CHECKER) $(OBJS_SRCS) $(INC_DEP)
 	@echo "\n$(END)$(LIGHT_BLUE)Making $(NAME2)$(END)"
 #	@$(CC) -o $@ $(OBJS_CHECKER) $(LIBFT)
-	@$(CC) $(FLAGS) -o $(NAME2) $(OBJS_CHECKER) $(OBJS_SRCS) $(LIBFT)
+	@$(CC) $(FLAGS) -o $(NAME2) $(OBJS_SRCS) $(OBJS_CHECKER) $(LIBFT)
 	@echo "$(END)$(GREEN)$(NAME2) is built$(END)"
 
 $(OBJPATH)/%.o: $(SRCPATH)/%.c $(INC_DEP)

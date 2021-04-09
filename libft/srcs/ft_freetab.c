@@ -6,7 +6,7 @@
 /*   By: jle-corr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/23 14:26:41 by jle-corr          #+#    #+#             */
-/*   Updated: 2021/03/31 17:08:08 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/02 02:22:19 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,21 @@ void	*ft_freetab(char **tab)
 	i = -1;
 	while (tab[++i])
 	{
-	//	free(tab[i]);
-	//	tab[i] = NULL;
-		ft_strdel(&tab[i]);
+		free(tab[i]);
+		//ft_strdel(&tab[i]);
 	}
-	ft_strdel(&tab[i]);
-	//free(tab[i]);
+	//ft_strdel(tab);
+	free(tab);
 //	tab[i] = NULL;
 	return (NULL);
 }
+/*void	*ft_freetab(char **tab)
+{
+	int	i;
+
+	i = -1;
+	while (tab[++i])
+		free(tab[i]);
+	free(tab);
+	return (NULL);
+}*/

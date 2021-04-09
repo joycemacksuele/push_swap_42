@@ -6,27 +6,11 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/31 17:23:24 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/05 01:12:20 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-/*Pour 3 values = normal: 1 or 2 ... max 3 opérations
-Pour 5 values = normal 5 to 9 and  max 12
-Pour 100 values = barème de 1 à 5
-  - moins de 700: 5 this one
-  - moins de 900: 4
-  - moins de 1100: 3
-  - moins de 1300: 2
-  - moins de 1500: 1:
-Pour 500 values = barème de 1 à 5
-  - moins de 5300: 5 this one
-  - moins de 7000: 4
-  - moins de 8500: 3
-  - moins de 10000: 2
-  - moins de 11500: 1
-*/
 
 void	pick_algo(t_lst **a, t_lst **b, int ac)
 {
@@ -34,13 +18,14 @@ void	pick_algo(t_lst **a, t_lst **b, int ac)
 		sort_max_3(a, 'a');
 	else if (ac <= 20)
 		sort_max_12(a, b);
-	else if (ac <= 100)
+	else
 		sort_max_100(a, b);
-/*	else
-		sort_4();*/
+//	else
+//		sort_max_500(a, b);
+	//	sort_max_500(a, b);
 
 ///// test
-	printf("------------ Sorted list a ------------\n");
+/*	printf("------------ Sorted list a ------------\n");
 
 	printf("len a = %d\n", lstlen(a));
 	if ((*a))
@@ -62,7 +47,7 @@ void	pick_algo(t_lst **a, t_lst **b, int ac)
 	{
 		printf("%d\n", (int)(*b)->nb);
 		(*b) = (*b)->next;
-	}
+	}*/
 
 ///// test
 }
@@ -84,7 +69,7 @@ int	main(int ac, char **av)
 			ft_putstr_fd("Error\n", 2);
 			return (-1);
 		}
-		if (is_sort(av) == -1)
+		if (is_sort(av, -1) == -1)
 		{
 			a = create_lst(&av[1]);
 			pick_algo(&a, &b, ac - 1);
@@ -92,6 +77,6 @@ int	main(int ac, char **av)
 		free_lst(&a);
 		free_lst(&b);
 	}
-	printf("NUMBER OF REGISTERS = %d\n", g_count_operations);
+//	printf("NUMBER OF REGISTERS = %d\n", g_count_operations);
 	return (0);
 }

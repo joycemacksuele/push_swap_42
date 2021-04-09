@@ -6,11 +6,27 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 02:01:49 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/28 17:29:21 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/03 23:37:44 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+/*int	ft_lstsize(t_list *lst)
+{
+	int	count;
+
+	if (!lst)
+		return (0);
+	count = 1;
+	while (lst->next)
+	{
+		count++;
+		lst = lst->next;
+	}
+	return (count);
+}
+*/
 
 int	lstlen(t_lst **lst)
 {
@@ -21,7 +37,7 @@ int	lstlen(t_lst **lst)
 	if (*lst)
 	{
 		tmp = *lst;
-		while (tmp)
+		while (tmp != NULL)
 		{
 			len++;
 			tmp = tmp->next;
@@ -36,6 +52,7 @@ void	free_lst(t_lst **a_or_b)
 
 	if (!(*a_or_b))
 		return ;
+	//	free(&(*a_or_b)->nb); ???? int nb was not allocated
 	while ((*a_or_b))
 	{
 		tmp = *a_or_b;
@@ -46,9 +63,9 @@ void	free_lst(t_lst **a_or_b)
 	}
 }
 
-int	lst_is_sort(t_lst *a_or_b, int reverse)
+int	lst_is_sort(t_lst *a_or_b, int ascending)
 {
-	if (reverse == 0)
+	if (ascending == 0)
 	{
 		while (a_or_b)
 		{
@@ -66,7 +83,7 @@ int	lst_is_sort(t_lst *a_or_b, int reverse)
 //	printf("lst is sorted!!!!\n");
 // --------------------------------------------------
 	}
-	else if (reverse == -1)
+	else if (ascending == -1)
 	{
 		while (a_or_b)
 		{
@@ -98,7 +115,7 @@ t_lst	*create_lst(char **av)
 	tmp = NULL;
 	while (*av != NULL)
 	{
-		tmp = lstnew(ft_atoi(*av));// or ft_strdup(*av)??
+		tmp = lstnew(ft_atoi(*av));
 		lstadd_back(&a_or_b, tmp);
 		av++;
 	}

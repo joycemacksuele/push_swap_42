@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 02:13:20 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/28 03:37:35 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/01 04:29:56 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,13 @@ void	rra_rrb(t_lst **lst, char a_or_b, int fd)
 	last->next = NULL;
 	new->next = (*lst);
 	(*lst) = new;
+	// test
 /*	while ((*lst))
 	{
 		printf("%d\n", (*lst)->nb);
 		(*lst) = (*lst)->next;
 	}*/
+	// test
 	if (fd == 1)
 	{
 		if (a_or_b == 'a')
@@ -103,6 +105,8 @@ void	ra_rb(t_lst **lst, char a_or_b, int fd)
 	int		tmp;
 	t_lst	*new;
 
+	if (!(*lst))
+		return ;
 	tmp = (*lst)->nb;// tmp = first nb of list
 	(*lst) = (*lst)->next;// moving head to next list
 	new = lstnew(tmp);// creating new list with the first nb on it
@@ -119,5 +123,7 @@ void	ra_rb(t_lst **lst, char a_or_b, int fd)
 			ft_putstr_fd("rb\n", fd);
 			g_count_operations++;
 		}
+
+	//	free(new);
 	}
 }

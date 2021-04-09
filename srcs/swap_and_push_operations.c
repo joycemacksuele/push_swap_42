@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 02:13:20 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/28 17:22:24 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/01 04:31:46 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	sa_sb(t_lst **lst, char a_or_b, int fd)
 {
 	int	tmp;
 
+	if (!(*lst))
+		return ;
 	tmp = (*lst)->nb;
 	(*lst)->nb = (*lst)->next->nb;
 	(*lst)->next->nb = tmp;
@@ -68,7 +70,8 @@ void	pb(t_lst **a, t_lst **b, int fd)
 	int		nb;
 
 	tmp = NULL;
-	if (a && b)
+	nb = 0;
+	if (a && *a)
 	{
 		nb = (*a)->nb;
 		tmp = lstnew(nb);
@@ -77,21 +80,9 @@ void	pb(t_lst **a, t_lst **b, int fd)
 			(*a) = (*a)->next;
 		else
 			free_lst(a);
-		//	(*a) = NULL;
 
-	/*	// test -------------------
-		while ((*a))
-		{
-			printf("a after = %d\n", (*a)->nb);
-			(*a) = (*a)->next;
-		}
-		printf("\n\n");
-		while ((*b))
-		{
-			printf("b after = %d\n", (*b)->nb);
-			(*b) = (*b)->next;
-		}
-		// test -------------------*/
+	//	free(tmp);
+		//	(*a) = NULL;
 		if (fd == 1)
 		{
 			ft_putstr_fd("pb\n", fd);
@@ -111,7 +102,8 @@ void	pa(t_lst **a, t_lst **b, int fd)
 	int		nb;
 
 	tmp = NULL;
-	if (a && b)
+	nb = 0;
+	if (b && *b)
 	{
 //		(*b) = lstnew(5);
 		nb = (*b)->nb;

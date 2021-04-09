@@ -6,13 +6,13 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/28 17:12:36 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/01 01:44:20 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	search_lower_number(t_lst **lower, int checker, int lower1)
+int	search_lower_number(t_lst **a_tmp, int checker, int lower1)
 {
 	t_lst	*tmp;
 	int		lower_index;
@@ -20,20 +20,25 @@ int	search_lower_number(t_lst **lower, int checker, int lower1)
 
 	lower_index = 0;
 	i = 1;
-	tmp = (*lower);
-	if (!(*lower))
+	tmp = (*a_tmp);
+	if (!(*a_tmp))
 		return (-1);
 	while (tmp)
 	{
-		if (checker && (*lower)->nb == lower1)
-			(*lower) = (*lower)->next;
-		if (tmp->next && (*lower)->nb > tmp->next->nb)
+		checker = 0;
+		lower1 = 0;
+	//	if (checker == 0 && (*a_tmp)->nb == lower1)
+	//		(*a_tmp) = (*a_tmp)->next;
+
+	//	printf("tmp->next>nb = %d\n", tmp->next->nb);
+	//	printf("(*a_tmp)->nb = %d\n", (*a_tmp)->nb);
+		if (tmp->next && (*a_tmp)->nb > tmp->next->nb)
 		{
-			if (checker && tmp->next->nb != lower1)
-			{
-				(*lower) = tmp->next;
-				lower_index = i;
-			}
+		//	if (checker == 0 && tmp->next->nb != lower1)
+		//	{
+			(*a_tmp) = tmp->next;
+			lower_index = i;
+		//	}
 		}
 		tmp = tmp->next;
 		i++;
@@ -45,7 +50,7 @@ int	search_lower_number(t_lst **lower, int checker, int lower1)
  * Steps:
  *
  * 1. Using the search_lower_number(), search for the smallest number in Stack
- *    a and save it to *lower (also save it's index).
+ *    a and save it to *a_tmp (also save it's index).
  * 2. Loop untill the smallest number found is moved to the top of stack a
  *    (using ra or rra depending on where the smallest number is located).
  * 3. If the stack a is not yet sorted, push that number to stack b with pb.
@@ -57,16 +62,16 @@ int	search_lower_number(t_lst **lower, int checker, int lower1)
 
 void	sort_max_12(t_lst **a, t_lst **b)
 {
-	t_lst	*lower;
+	t_lst	*a_tmp;
 	int		len;
 	int		i;
 
 	while (lst_is_sort((*a), 0) == -1 && (len = lstlen(a)) > 3)
 	{
-		lower = (*a);
+		a_tmp = (*a);
 		i = 0;
-		i = search_lower_number(&lower, -1, -1);
-		while ((*a)->nb != lower->nb)
+		i = search_lower_number(&a_tmp, -1, -1);
+		while ((*a)->nb != a_tmp->nb)
 		{
 			if (i <= len / 2)
 				ra_rb(a, 'a', 1);

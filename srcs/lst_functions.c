@@ -6,28 +6,48 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 02:01:49 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/28 17:27:55 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/02 00:57:02 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	lstdelone(t_lst *lst)
+/*void	lstdelone(t_lst *lst)
 {
 	if (!lst)
 		return ;
 //	free(&lst->nb); int nb was ot allocated
 	free(lst);
 	lst = NULL;
+}*/
+
+void	lstclear(t_lst **lst, void (*del)(void *))
+{
+	t_lst	*tmp;
+
+	if (!(*lst) || !del)
+		return ;
+	while ((*lst))
+	{
+		tmp = *lst;
+	//	(*del)((void*)(*lst)->nb);
+		*lst = (*lst)->next;
+		free(tmp);
+		tmp = NULL;
+	}
 }
+
 
 t_lst	*lstlast(t_lst *a_or_b)
 {
+	t_lst	*last;
+
+	last = a_or_b;
 	if (!a_or_b)
 		return (NULL);
-	while (a_or_b->next)
-		a_or_b = a_or_b->next;
-	return (a_or_b);
+	while (last->next)
+		last = last->next;
+	return (last);
 }
 
 void	lstadd_front(t_lst **a_or_b, t_lst *new)

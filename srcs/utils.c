@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:56:28 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/28 18:00:54 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/08 04:10:08 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,24 @@
  *		int: 0 is it's sorted and -1 if it's not sorted.
  */
 
-int	is_sort(char **av)
+int	is_sort(char **av, int error)
 {
 	int	i;
 
-	i = 1;
-	while (av[i])
+	i = 0;
+	if (av)
 	{
-		if (av[i + 1] && ft_atoi(av[i]) > ft_atoi(av[i + 1]))
-			return (-1);
-		i++;
+		if (av[0] && (ft_strcmp(av[0], "./push_swap") == 0 ||
+			ft_strcmp(av[0], "./checker") == 0))
+			i = 1;
+		while (av[i])
+		{
+			if (av[i + 1] && av[i] && ft_atoi(av[i]) > ft_atoi(av[i + 1]))
+				return (-1);
+			i++;
+		}
+		if (error == -1)
+			ft_putstr_fd("Numbers are already sorted!\n", 2);
 	}
-	ft_putstr_fd("Numbers are already sorted!\n", 2);
 	return (0);
 }

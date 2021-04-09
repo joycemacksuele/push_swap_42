@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/31 20:10:41 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/02 00:00:44 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,27 @@
 void	run_operations_on_stacks(char *line, t_lst **a, t_lst **b)
 {
 	if (ft_strcmp(line, "sa") == 0)
-		sa_sb(a, 'a', 1);
+		sa_sb(a, 'a', 0);
 	else if (ft_strcmp(line, "sb") == 0)
-		sa_sb(b, 'b', 1);
+		sa_sb(b, 'b', 0);
 	else if (ft_strcmp(line, "ss") == 0)
-		ss(a, b, 1);
+		ss(a, b, 0);
 	else if (ft_strcmp(line, "pa") == 0)
-		pa(a, b, 1);
+		pa(a, b, 0);
 	else if (ft_strcmp(line, "pb") == 0)
-		pb(b, b, 1);
+		pb(a, b, 0);
 	else if (ft_strcmp(line, "ra") == 0)
-		ra_rb(a, 'a', 1);
+		ra_rb(a, 'a', 0);
 	else if (ft_strcmp(line, "rb") == 0)
-		ra_rb(b, 'b', 1);
+		ra_rb(b, 'b', 0);
 	else if (ft_strcmp(line, "rr") == 0)
-		rr(a, b, 1);
+		rr(a, b, 0);
 	else if (ft_strcmp(line, "rra") == 0)
-		rra_rrb(a, 'a', 1);
+		rra_rrb(a, 'a', 0);
 	else if (ft_strcmp(line, "rrb") == 0)
-		rra_rrb(b, 'b', 1);
+		rra_rrb(b, 'b', 0);
 	else if (ft_strcmp(line, "rrr") == 0)
-		rrr(a, b, 1);
+		rrr(a, b, 0);
 }
 /*
  * If after executing the instructions, stack a is actually sorted AND b is
@@ -64,25 +64,29 @@ void	create_lists(char *opt, char **av)
 		printf("operation = %s\n", (char *)operations->content);
 		operations = operations->next;
 	}*/
-	if (is_sort(av) == -1)
+	if (is_sort(av, -1) == -1)
 		a = create_lst(&av[1]);
 
 	while (*lines != NULL)
 	{
 		run_operations_on_stacks(*lines, &a, &b);
-		if (lst_is_sort(a ,0) == 0)
-			ft_putstr_fd("OK\n", 1);
-		else if (lst_is_sort(a ,0) == -1)
-			ft_putstr_fd("KO\n", 1);
 		lines++;
 	//	operations = operations->next;
 	}
-	while (a)
+	if (lst_is_sort(a ,0) == 0 && !b)
+		ft_putstr_fd("OK\n", 1);
+//	else if (lst_is_sort(a ,0) == -1)
+	else
+		ft_putstr_fd("KO\n", 1);
+/*	while (a)
 	{
 		printf("a = %d\n", a->nb);
 		a = a->next;
-	}
-	free_list(&operations);
+	}*/
+	//free_list(&operations);
+	ft_lstclear(&operations, &free_list);
+	//lstclear(&a, &free_lst);
+	//stclear(&b, &free_lst);
 	free_lst(&a);
 	free_lst(&b);
 	ft_freetab(lines);

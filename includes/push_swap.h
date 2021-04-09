@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 02:13:33 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/31 16:45:00 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/02 00:03:37 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int g_count_operations;
  * push_swap
  */
 void	push_swap(t_lst **a, t_lst **b, int ac);
-int		is_sort(char **av);
+int		is_sort(char **av, int error);
 void	pick_algo(t_lst **a, t_lst **b, int ac);
 
 /* Errors */
@@ -49,19 +49,24 @@ t_lst	*lstnew(int nb);
 t_lst	*lstlast(t_lst *a_or_b);
 void	lstadd_back(t_lst **a_or_b, t_lst *tmp);
 void	lstadd_front(t_lst **a_or_b, t_lst *new);
-void	lstdelone(t_lst *lst);
+void	lstclear(t_lst **lst, void (*del)(void *));
+//void	lstdelone(t_lst *lst);
 
 /* push swap lst management */
 t_lst	*create_lst(char **av);
 int		lst_is_sort(t_lst *a_or_b, int reverse);
-void	free_lst(t_lst **a);
+void	free_lst(t_lst **a_or_b);
 int		lstlen(t_lst **lst);
 
 /* Picking algorithm */
-int     search_lower_number(t_lst **lower, int checker, int lower1);
 void	sort_max_3(t_lst **lst, char a_or_b);
 void	sort_max_12(t_lst **a, t_lst **b);
 void	sort_max_100(t_lst **a, t_lst **b);
+void	sort_max_500(t_lst **a, t_lst **b);
+int     search_lower_number(t_lst **lower, int checker, int lower1);
+void	chunks(t_lst **a, t_lst **b, int chunck_end);
+void	sort_b(t_lst **b);
+
 
 /* Operations */
 void	sa_sb(t_lst **lst, char a_or_b, int fd);
@@ -82,6 +87,6 @@ void	checker(t_lst **a, t_lst **b, int ac);
 
 /* checker list management */
 t_list	*create_list(char **line);
-void	free_list(t_list **operations);
+void	free_list(void *operations);
 
 #endif
