@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 02:01:49 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/02 00:57:02 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/13 03:45:41 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,20 @@ void	lstclear(t_lst **lst, void (*del)(void *))
 	}
 }
 
+t_lst	*lst_before_last(t_lst *a_or_b)
+{
+	t_lst	*last;
+
+	last = a_or_b;
+	if (!a_or_b || !a_or_b->next)
+		return (NULL);
+//	if (last->next)
+//	{
+	while (last->next->next)
+		last = last->next;
+//	}
+	return (last);
+}
 
 t_lst	*lstlast(t_lst *a_or_b)
 {

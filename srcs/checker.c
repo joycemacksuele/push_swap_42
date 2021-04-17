@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/02 00:00:44 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/16 01:52:12 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,27 @@
 void	run_operations_on_stacks(char *line, t_lst **a, t_lst **b)
 {
 	if (ft_strcmp(line, "sa") == 0)
-		sa_sb(a, 'a', 0);
+		sa(a, 0, NULL);
 	else if (ft_strcmp(line, "sb") == 0)
-		sa_sb(b, 'b', 0);
+		sb(b, 0, NULL);
 	else if (ft_strcmp(line, "ss") == 0)
-		ss(a, b, 0);
+		ss(a, b, 0, NULL);
 	else if (ft_strcmp(line, "pa") == 0)
-		pa(a, b, 0);
+		pa(a, b, 0, NULL);
 	else if (ft_strcmp(line, "pb") == 0)
-		pb(a, b, 0);
+		pb(a, b, 0, NULL);
 	else if (ft_strcmp(line, "ra") == 0)
-		ra_rb(a, 'a', 0);
+		ra(a, 0, NULL);
 	else if (ft_strcmp(line, "rb") == 0)
-		ra_rb(b, 'b', 0);
+		rb(b, 0, NULL);
 	else if (ft_strcmp(line, "rr") == 0)
-		rr(a, b, 0);
+		rr(a, b, 0, NULL);
 	else if (ft_strcmp(line, "rra") == 0)
-		rra_rrb(a, 'a', 0);
+		rra(a, 0, NULL);
 	else if (ft_strcmp(line, "rrb") == 0)
-		rra_rrb(b, 'b', 0);
+		rrb(b, 0, NULL);
 	else if (ft_strcmp(line, "rrr") == 0)
-		rrr(a, b, 0);
+		rrr(a, b, 0, NULL);
 }
 /*
  * If after executing the instructions, stack a is actually sorted AND b is
@@ -46,19 +46,17 @@ void	run_operations_on_stacks(char *line, t_lst **a, t_lst **b)
 
 void	create_lists(char *opt, char **av)
 {
-	t_list	*operations;
+//	t_list	*operations;
 	t_lst	*a;
 	t_lst	*b;
 	char	**lines;
 
-	operations = NULL;
+//	operations = NULL;
 	a = NULL;
 	b = NULL;
 	lines = ft_split(opt, ' ');
-//	operations = (t_list *)malloc(sizeof(t_list));
-//	if (!operations)
-//		return ;
-	operations = create_list(lines);
+
+//	operations = create_list(lines);
 /*	while (operations)
 	{
 		printf("operation = %s\n", (char *)operations->content);
@@ -84,12 +82,12 @@ void	create_lists(char *opt, char **av)
 		a = a->next;
 	}*/
 	//free_list(&operations);
-	ft_lstclear(&operations, &free_list);
+//	ft_lstclear(&operations, &free_list);
 	//lstclear(&a, &free_lst);
 	//stclear(&b, &free_lst);
 	free_lst(&a);
 	free_lst(&b);
-	ft_freetab(lines);
+//	ft_freetab(lines);
 }
 
 int	check_operations(char *line)

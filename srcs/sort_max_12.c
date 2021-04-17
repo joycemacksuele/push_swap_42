@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/01 01:44:20 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/15 01:31:13 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	search_lower_number(t_lst **a_tmp, int checker, int lower1)
  *    everything back to stack a using pa.
  */
 
-void	sort_max_12(t_lst **a, t_lst **b)
+void	sort_max_12(t_lst **a, t_lst **b, t_list **operations)
 {
 	t_lst	*a_tmp;
 	int		len;
@@ -74,16 +74,16 @@ void	sort_max_12(t_lst **a, t_lst **b)
 		while ((*a)->nb != a_tmp->nb)
 		{
 			if (i <= len / 2)
-				ra_rb(a, 'a', 1);
+				ra(a, 2, operations);
 			else if (i > len / 2)
-				rra_rrb(a, 'a', 1);
+				rra(a, 2, operations);
 		}
 		if (lst_is_sort((*a), 0) == -1)
-			pb(a, b, 1);
+			pb(a, b, 2, operations);
 	}
-	sort_max_3(a, 'a');
+	sort_max_3(a, operations);
 	while ((*b))
-		pa(a, b, 1);
+		pa(a, b, 2, operations);
 }
 
 /*
@@ -92,23 +92,23 @@ void	sort_max_12(t_lst **a, t_lst **b)
  * which operator to use, while the list of arguents is not sorted.
  */
 
-void	sort_max_3(t_lst **lst, char a_or_b)
+void	sort_max_3(t_lst **a, t_list **operations)
 {
-	if (lstlen(lst) == 2)
-		sa_sb(lst, a_or_b, 1);
-	else if (lstlen(lst) == 3)
+	if (lstlen(a) == 2)
+		sa(a, 2, operations);
+	else if (lstlen(a) == 3)
 	{
-		while (lst_is_sort((*lst), 0) == -1)
+		while (lst_is_sort((*a), 0) == -1)
 		{
-			if ((*lst)->nb > (*lst)->next->nb &&
-			(*lst)->nb > (*lst)->next->next->nb)
-				ra_rb(lst, a_or_b, 1);
-			else if ((*lst)->nb < (*lst)->next->nb &&
-			(*lst)->next->nb > (*lst)->next->next->nb)
-				rra_rrb(lst, a_or_b, 1);
-			if ((*lst)->nb > (*lst)->next->nb &&
-			(*lst)->nb < (*lst)->next->next->nb)
-				sa_sb(lst, a_or_b, 1);
+			if ((*a)->nb > (*a)->next->nb &&
+			(*a)->nb > (*a)->next->next->nb)
+				ra(a, 2, operations);
+			else if ((*a)->nb < (*a)->next->nb &&
+			(*a)->next->nb > (*a)->next->next->nb)
+				rra(a, 2, operations);
+			if ((*a)->nb > (*a)->next->nb &&
+			(*a)->nb < (*a)->next->next->nb)
+				sa(a, 2, operations);
 		}
 	}
 }

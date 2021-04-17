@@ -6,11 +6,32 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/01 02:05:32 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/09 03:03:19 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+/*void	sort_max_500(t_lst **a, t_lst **b)
+{
+	while (lstlen(b) < 3)
+		pb(a, b, 1);
+	if (lstlen(b) == 3)
+		sort_max_3(b, 'b')
+	while (lstlen(a) > 0)
+	{
+		// algo
+		pb(a, b, 1)
+	}
+	//if (order_b(b, 0, 1) > 0)
+	//	rotate_b(b, order_b(b, 0, 1));
+	//else if (order_b(b, 0, 1) < 0)
+	//	r_rotate_b(b, order_b(b, 0, 1));
+	while ((*b))
+		pa(a, 'a', 1);
+}
+*/
+
 
 /*void	sort_b(t_lst **b)
 {
@@ -92,7 +113,7 @@
 	//	printf("head of b = %d\n", (*b)->nb);
 	//	printf("length of b = %d\n", lstlen(b));
 	}
-}*/
+}
 
 void	sort_max_500(t_lst **a, t_lst **b)
 {
@@ -112,4 +133,5 @@ void	sort_max_500(t_lst **a, t_lst **b)
 	}
 	while ((*b))
 		pa(a, b, 1);
-}
+}*/
+

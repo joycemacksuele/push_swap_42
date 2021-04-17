@@ -6,13 +6,43 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/09 02:01:19 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/17 05:28:02 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/*int	search_bigger_number(t_lst **bigger)//MAYBE DELETE
+/*int	search_lower_number(t_lst **a_tmp, int checker, int lower1)
+{
+	t_lst	*tmp;
+	int		lower_index;
+	int		i;
+
+	lower_index = 0;
+	i = 1;
+	tmp = (*a_tmp);
+	if (!(*a_tmp))
+		return (-1);
+	while (tmp)
+	{
+		if (checker == 0 && (*a_tmp)->nb == lower1)
+			(*a_tmp) = (*a_tmp)->next;
+		if (tmp->next && (*a_tmp)->nb > tmp->next->nb)
+		{
+			if (checker == 0 && tmp->next->nb != lower1)
+			{
+				(*a_tmp) = tmp->next;
+				lower_index = i;
+			}
+		}
+		tmp = tmp->next;
+		i++;
+	}
+	return (lower_index);
+}*/
+
+
+int	search_bigger_number(t_lst **head, int checker, int bigger1)//MAYBE DELETE
 {
 	t_lst	*tmp;
 	int		bigger_index;
@@ -20,23 +50,39 @@
 
 	bigger_index = 0;
 	i = 1;
-	tmp = (*bigger);
-	if (!(*bigger))
+	tmp = (*head);
+	if (!(*head))
 		return (-1);
-	while (tmp)
+	printf("bigger1 = %d\n", bigger1);
+	printf("checker = %d\n", checker);
+	while (tmp != NULL)
 	{
-		if (tmp->next && (*bigger)->nb < tmp->next->nb)
+
+	//	printf("(*head)->nb = %d\n", (*head)->nb);
+	//	printf("tmp->next>nb = %d\n", tmp->next->nb);
+		if (checker == 0 && (*head)->nb == bigger1)
+			(*head) = (*head)->next;
+		if (tmp->next && (*head)->nb < tmp->next->nb)
 		{
-			(*bigger) = tmp->next;
-			bigger_index = i;
+			if (checker == 0 && tmp->next->nb != bigger1)
+			{
+				(*head) = tmp->next;
+				bigger_index = i;
+			}
+			else if (checker == -1)
+			{
+				(*head) = tmp->next;
+				bigger_index = i;
+			}
 		}
 		tmp = tmp->next;
 		i++;
+
 	}
 	return (bigger_index);
-}*/
+}
 
-void	sort_b(t_lst **b)
+void	sort_b(t_lst **b, t_list **operations)
 {
 	t_lst	*tmp;
 	t_lst	*lower;
@@ -48,18 +94,18 @@ void	sort_b(t_lst **b)
 	{
 		//printf("ENTERED SORT B\n");
 		if (tmp->next && tmp->nb < tmp->next->nb && tmp->nb != lower->nb)
-			sa_sb(b, 'b', 1);
+			sb(b, 2, operations);
 		else if (tmp->next && tmp->nb > tmp->next->nb)
 		{
-			ra_rb(b, 'b', 1);
+			rb(b, 2, operations);
 			tmp = tmp->next;
 		}
 		if ((*b)->nb == lower->nb)
-			ra_rb(b, 'b', 1);
+			rb(b, 2, operations);
 	}
 }
 
-void	chunks(t_lst **a, t_lst **b, int chunck_end)
+void	chunks(t_lst **a, t_lst **b, int chunck_end, t_list **operations)
 {
 	t_lst	*head;
 	t_lst	*lower1;
@@ -101,23 +147,169 @@ void	chunks(t_lst **a, t_lst **b, int chunck_end)
 			((*a)->nb != lower1->nb && (*a)->nb != lower2->nb))
 		{
 			if (i1 < ((lstlen(a) - 1) - i2))
-				ra_rb(a, 'a', 1);
+				ra(a, 2, operations);
 			else if (i1 >= ((lstlen(a) - 1) - i2))
-				rra_rrb(a, 'a', 1);
+				rra(a, 2, operations);
 		}
 		if (lst_is_sort((*a), 0) == -1)
 		{
 			if (!(*a)->next->next)
-				sa_sb(a, 'a', 1);
-			if (((*a) && (*a)->next && (*a)->nb < (*a)->next->nb) && ((*b) && (*b)->next && (*b)->nb < (*b)->next->nb))
-				ss(a, b, 1);
+				sa(a, 2, operations);
+		//	if (((*a) && (*a)->next && (*a)->nb < (*a)->next->nb) && ((*b) && (*b)->next && (*b)->nb < (*b)->next->nb))
+		//		ss(a, b, 2, operations);
 	//		else if ((*a)->nb < lstlast((*a)) && (*b)->nb < (*b)->next->nb)
-			pb(a, b, 1);
+			pb(a, b, 2, operations);
 		}
 		else if (lst_is_sort((*a), 0) == 0 && lstlen(b) < chunck_end)
-			pb(a, b, 1);
+			pb(a, b, 2, operations);
 	//	printf("head of b = %d\n", (*b)->nb);
 	//	printf("length of b = %d\n", lstlen(b));
+	}
+}
+
+void	frombtoa(t_lst **a, t_lst **b, t_list **operations)
+{
+	t_lst	*head;
+	t_lst	*bigger1;
+	t_lst	*bigger2;
+	int		i1;
+	int		i2;
+	int		track_of_pa;
+
+	while ((*b))
+	{
+
+//// test
+	/*	t_lst *tmp;
+		t_lst *btmp;
+		tmp = (*a);
+		btmp = (*b);
+		while (tmp)
+		{
+			printf("a = %d		", tmp->nb);
+			tmp = tmp->next;
+			if (btmp)
+			{
+				printf("		b = %d\n", btmp->nb);
+				btmp = btmp->next;
+			}
+		}
+		while (btmp)
+		{
+			printf("				b = %d\n", btmp->nb);
+			btmp = btmp->next;
+		}
+		printf("\n---------------------------------------------------\n");
+//// test*/
+
+	//	if (lstlen(b) >= chunck_end || !(*a))
+	//		break ;
+		track_of_pa = 0;
+		head = (*b);
+		i1 = 0;
+		i1 = search_bigger_number(&head, -1, -1);
+	//	i1 = search_lower_number(&head, -1, -1);
+		bigger1 = head;
+		head = (*b);
+		printf("head of b = %d\n", head->nb);
+		i2 = 0;
+		i2 = search_bigger_number(&head, 0, bigger1->nb);
+	//	i2 = search_lower_number(&head, 1, bigger1->nb);
+		bigger2 = head;
+
+//// test
+		printf("\n\n------\n");
+		printf("head of a = %d\n", (*a)->nb);
+		printf("length of a = %d\n\n", lstlen(a));
+		if ((*b)->next)
+		{
+			printf("bigger1 number = %d\n", bigger1->nb);
+			printf("i1 = %d\n\n", i1);
+		}
+		if ((*b)->next)
+		{
+			printf("bigger2 number = %d\n", bigger2->nb);
+			printf("i2 = %d\n", i2);
+		}
+		printf("------\n\n");
+//// test
+
+		while (track_of_pa < 2)
+		{
+		// 100 NUMEROS FUNCIONANDO... ALGO ERRADO NO LOOP DO FROM A TO B COM 500 NUMEROS com o rrb
+
+			printf("---------------\nlstlen(b) - 1 - i2 = %d\ni1 = %d\ni2 = %d\n---------------\n", (lstlen(b) - 1) - i2, i1, i2);
+			while ((bigger1 && bigger2 && (*a)) &&
+				((*b)->nb != bigger1->nb && (*b)->nb != bigger2->nb))// HAVE TO CHANGE THOSE STATEMENTS
+			{
+				if (i1 < ((lstlen(b) - 1) - i2))// HAVE TO CHANGE THOSE STATEMENTS
+				{
+					printf("RB CALLED\n");
+					rb(b, 2, operations);
+				}
+				else if (i1 >= ((lstlen(b) - 1) - i2))// HAVE TO CHANGE THOSE STATEMENTS
+					rrb(b, 2, operations);
+			}
+			if ((*b)->nb == bigger1->nb || (*b)->nb == bigger2->nb)
+			{
+				track_of_pa++;
+				if ((*b)->nb == bigger1->nb)
+					i1 = i2;// i1 - track_of_pa;
+				else if ((*b)->nb == bigger2->nb)
+					i2 = i1;// i2 - track_of_pa;
+				pa(a, b, 2, operations);
+					printf("PA CALLED\n");
+			}
+		}
+		if (((*a)->next && (*a)->nb > (*a)->next->nb) && ((*b)->next && (*b)->nb < (*b)->next->nb))
+		{
+			printf("fez ss  from a to b\n");
+			ss(a, b, 2, operations);
+		}
+		else if ((*a)->nb > (*a)->next->nb)
+		{
+			printf("pq nao fez ss? from a to b\n");
+			sa(a, 2, operations);
+		}
+		if (lst_is_sort((*b), -1) == -1)
+		{
+			if (!(*b)->next->next)
+				sb(b, 2, operations);
+	//		else if ((*a)->nb < lstlast((*a)) && (*b)->nb < (*b)->next->nb)
+		//	pa(a, b, 2, operations);
+		}
+		else if (lst_is_sort((*b), -1) == 0)
+		{
+			while ((*b))
+				pa(a, b, 2, operations);
+		}
+
+
+//// test
+/*
+		printf("\n---------------------------------------------------\n");
+		tmp = (*a);
+		btmp = (*b);
+		while (tmp)
+		{
+			printf("a = %d		", tmp->nb);
+			tmp = tmp->next;
+			if (btmp)
+			{
+				printf("		b = %d\n", btmp->nb);
+				btmp = btmp->next;
+			}
+		}
+		while (btmp)
+		{
+			printf("				b = %d\n", btmp->nb);
+			btmp = btmp->next;
+		}
+		printf("\n---------------------------------------------------\n");
+//// test*/
+
+//		printf("head of b = %d\n", (*b)->nb);
+//		printf("length of b = %d\n", lstlen(b));
 	}
 }
 
@@ -131,7 +323,7 @@ void	chunks(t_lst **a, t_lst **b, int chunck_end)
 	while (chunk <= 5)
 	{
 		if ((*a))
-			chunks(a, b, chunck_end);
+			chunks(a, b, chunck_end, operations);
 		sort_b(b);
 		if (lstlen(a) >= 1)
 		{
@@ -140,8 +332,9 @@ void	chunks(t_lst **a, t_lst **b, int chunck_end)
 		chunk++;
 	}
 	while ((*b))
-		pa(a, b, 1);
+		pa(a, b, 2, operations);
 }*/
+
 int	chunk_is_sort(t_lst *b, int ascending, int chunk_size)
 {
 	if (ascending == 0 && b->next)
@@ -165,7 +358,7 @@ int	chunk_is_sort(t_lst *b, int ascending, int chunk_size)
 	return (0);
 }
 
-int	midpoint_sort_a_from_b_2(t_lst **a, t_lst **b, int mid_nb, int chunk_size)
+int	midpoint_sort_a_from_b_2(t_lst **a, t_lst **b, int mid_nb, int chunk_size, t_list **operations)
 {
 	int	ret_chunk_size;
 	int	track_of_ra;
@@ -180,44 +373,40 @@ int	midpoint_sort_a_from_b_2(t_lst **a, t_lst **b, int mid_nb, int chunk_size)
 	chunk_len = chunk_size;
 
 		//// test
-/*				printf("\n++++++++++++++++++++++++++++++++++++++++++++++++\n");
+				printf("\n++++++++++++++++++++++++++++++++++++++++++++++++\n");
 				t_lst *tmp;
 				tmp = (*a);
-				while (tmp)
-				{
-					printf("a = %d\n", tmp->nb);
-					tmp = tmp->next;
-				}
+				printf("head of a = %d\n", tmp->nb);
 				printf("\n++++++++++++++++++++++++++++++++++++++++++++++++\n");
-		///test*/
+		///test
 
 	while (chunk_len)
 	{
 		while ((*a)->nb <= mid_nb && track_of_pb <= chunk_size / 2)
 		{
-			pb(a, b, 1);
+			pb(a, b, 2, operations);
 			track_of_pb++;
 			chunk_len--;
 			ret_chunk_size++;
-//			printf("track_of_pb = %d\n", track_of_pb);
+			printf("track_of_pb = %d\n", track_of_pb);
 		}
 		if ((*a)->nb > mid_nb && chunk_len >= 1)
 		{
-			ra_rb(a, 'a', 1);
+			ra(a, 2, operations);
 			track_of_ra++;
-//			printf("track_of_RA = %d AND CHUNK LEN = %d\n", track_of_ra, chunk_len);
+			printf("track_of_RA = %d AND CHUNK LEN = %d\n", track_of_ra, chunk_len);
 			chunk_len--;
 		}
 		//chunk_len--;// melhor aqui???
 	}
 	while (track_of_ra--)
-		rra_rrb(a, 'a', 1);
+		rra(a, 2, operations);
 
 //	if ((*a)->next && (*a)->nb > (*a)->next->nb)
-//		sa_sb(a, 'a', 1);
+//		sa(a, 2, operations);
 
 		//// test
-/*				printf("\n++++++++++++++++++++++++++++++++++++++++++++++++\n");
+				printf("\n++++++++++++++++++++++++++++++++++++++++++++++++\n");
 			//	t_lst *tmp;
 				t_lst *btmp;
 				btmp = (*b);
@@ -239,49 +428,82 @@ int	midpoint_sort_a_from_b_2(t_lst **a, t_lst **b, int mid_nb, int chunk_size)
 				}
 
 				printf("\n++++++++++++++++++++++++++++++++++++++++++++++++\n");
-		///test*/
+		///test
 
 	return (ret_chunk_size);
 }
 
 
-int	midpoint_sort_a(t_lst **a, t_lst **b, int mid_nb, int chunk_len)
+int	midpoint_sort_a(t_lst **a, t_lst **b, int mid_nb, t_list **operations)//, int chunk_len)
 {
-	t_lst	*end;
+	t_lst	*end_a;
+	t_lst	*end_b;
 	int		len_a;
 	int		len;
 	int		ret_chunk_size;
+	int		track_of_pb1;
+	int		track_of_pb2;
 
-	end = NULL;;
-	len_a = lstlen(a);
-	if (chunk_len > 0)
-		len = chunk_len;
-	else
-		len = lstlen(a) / 2;
+	end_a = NULL;
+	end_b = NULL;
+	len_a = lstlen(a) / 2;
+	track_of_pb1 = 0;
+	track_of_pb2 = 0;
+//	if (chunk_len > 0)
+//		len = chunk_len;
+//	else
+	len = lstlen(a) / 2;
 	ret_chunk_size = 0;
 	while (len--)
 	{
 		while ((*a)->nb < mid_nb)
 		{
-		//	printf("current nb < 12 = %d\n", (*a)->nb);
-			pb(a, b, 1);
+			pb(a, b, 2, operations);
+		//	printf("operations->content = %s\n", (*operations)->content);
+
+			track_of_pb1++;
 			ret_chunk_size++;
+		/*	if (track_of_pb1 >= 2 && (*a)->next->nb < mid_nb)//optmizing
+				if ((*a)->nb < (*a)->next->nb && (*b)->nb > (*b)->next->nb)
+					ss(a, b, 2, operations);*/
 		}
 		if ((*a)->nb >= mid_nb)
 		{
-			end = lstlast((*a));
-			while (end->nb < mid_nb)
+			end_a = lstlast((*a));
+		/*	if (!(end_b = lst_before_last((*b))))
+				printf("\n---> NULL <---\n");*/
+			while (end_a->nb < mid_nb)
 			{
-				rra_rrb(a, 'a', 1);
-				pb(a, b, 1);
+			/*	if (track_of_pb1 >= 2 && end_b->next && end_b->nb > end_b->next->nb)//optmizing
+					rrr(a, b, 2, operations);
+				else*/
+				rra(a, 2, operations);
+				pb(a, b, 2, operations);
+				track_of_pb1++;
+				track_of_pb2++;
 				ret_chunk_size++;
-				end = lstlast((*a));
+				end_a = lstlast((*a));
+				end_b = lst_before_last((*b));
+				printf("track_of_pb2 = %d\n", track_of_pb2);
 			}
-			while ((*a)->nb >= mid_nb)
+			while ((*a)->nb >= mid_nb && track_of_pb2 < len_a)
 			{
-				ra_rb(a, 'a', 1);
-				if (lstlen(b) >= chunk_len + len_a / 2)//wrong here
-					break ;
+		/*		if (track_of_pb1 >= 2 && (*a)->next->nb >= mid_nb)//optmizing
+					if ((*a)->nb > (*a)->next->nb && (*b)->nb > (*b)->next->nb)
+						ss(a, b, 2, operations);
+
+				if (track_of_pb1 >= 2 && (*b)->nb > (*b)->next->nb)//optmizing
+					rr(a, b, 2, operations);
+		*/
+				printf("track_of_pb2 = %d\n", track_of_pb2);
+			//	else
+			//	{
+					track_of_pb2++;
+				//	printf("RA LOOP ---\n");
+					ra(a, 2, operations);
+			//	}
+				//	if (lstlen(b) == lstlen(b) - len_a / 2)//wrong here
+				//		break ;
 			}
 		}
 	}
@@ -345,11 +567,10 @@ char	**save_stack_to_array(t_lst **a_or_b, int len)
 	t_lst	*tmp;
 	int		i;
 
-	saved = (char **)malloc(sizeof(char *) * (len + 1));//(lstlen(a_or_b) + 1));
+	saved = (char **)malloc(sizeof(char *) * (len + 1));
 	itoa = NULL;
 	tmp = (*a_or_b);
 	i = 0;
-//	saved[lstlen(a_or_b)] = NULL;
 	if (a_or_b)
 	{
 		while (tmp && len--)
@@ -368,7 +589,7 @@ char	**save_stack_to_array(t_lst **a_or_b, int len)
 	return (saved);
 }
 
-int	midpoint_sort_a_from_b_1(t_lst **a, t_lst **b, int chunk_size)
+int	midpoint_sort_a_from_b_1(t_lst **a, t_lst **b, int chunk_size, t_list **operations)
 {
 	char	**saved_a;
 	char	**sorted_a;
@@ -382,7 +603,7 @@ int	midpoint_sort_a_from_b_1(t_lst **a, t_lst **b, int chunk_size)
 	if ((saved_a = save_stack_to_array(a, chunk_size)) == NULL)
 		return (-1);
 /// test
-/*		printf("\n---------------------------------------------------\n\n");
+		printf("\n---------------------------------------------------\n\n");
 		int i = 0;
 		while (saved_a[i])
 		{
@@ -390,14 +611,14 @@ int	midpoint_sort_a_from_b_1(t_lst **a, t_lst **b, int chunk_size)
 			i++;
 		}
 		printf("\n---------------------------------------------------\n\n");
-/// test*/
-	
+/// test
+
 	if ((sorted_a = sort_array(&saved_a[0])) == NULL)
 		return (-1);
 
 
 /// test
-/*		printf("\n---------------------------------------------------\n\n");
+		printf("\n---------------------------------------------------\n\n");
 		i = 0;
 		while (sorted_a[i])
 		{
@@ -405,25 +626,25 @@ int	midpoint_sort_a_from_b_1(t_lst **a, t_lst **b, int chunk_size)
 			i++;
 		}
 		printf("\n---------------------------------------------------\n\n");
-/// test*/
+/// test
 
 	if ((mid_nb_a = find_mid_nb(sorted_a)) == -1)
 		return (-1);
 
-//	printf("MID_NB_A = %d\n", mid_nb_a);
-	chunk_size = midpoint_sort_a_from_b_2(a, b, mid_nb_a, chunk_size);
+	printf("MID_NB_A = %d\n", mid_nb_a);
+	chunk_size = midpoint_sort_a_from_b_2(a, b, mid_nb_a, chunk_size, operations);
 	//ft_freetab(saved_a);
 	ft_freetab(sorted_a);
 
 //	if ((*a)->next && (*a)->nb > (*a)->next->nb)//leave it here or inside midpoint_sort_a_from_b_2????
-//		sa_sb(a, 'a', 1);
+//		sa(a, 2, operations);
 
-//	printf("CHUNK SIZE after sort a from b= %d\n", chunk_size);
+	printf("CHUNK SIZE after sort a from b = %d\n", chunk_size);
 	return (chunk_size);
 }
 
 
-int	midpoint_sort_b_last(t_lst **a, t_lst **b, int mid_nb_b, int chunk_size)
+int	midpoint_sort_b_last(t_lst **a, t_lst **b, int mid_nb_b, int chunk_size, t_list **operations)
 {
 	int	len;
 	int	track_of_rb;
@@ -443,17 +664,50 @@ int	midpoint_sort_b_last(t_lst **a, t_lst **b, int mid_nb_b, int chunk_size)
 		{
 			if ((*b)->next && (*b)->nb < (*b)->next->nb)
 			{
-//				printf("nb = %d ", (*b)->nb);
-				sa_sb(b, 'b', 1);
-//				printf("SB and chunk_size == 2\n");
+				printf("nb = %d ", (*b)->nb);
+				sb(b, 2, operations);
+				printf("SB and chunk_size == 2\n");
 			}
 			while ((*b) && chunk_size > 0)
 			{
-//				printf("nb = %d ", (*b)->nb);
-				pa(a, b, 1);
+				printf("nb = %d ", (*b)->nb);
+				pa(a, b, 2, operations);
 				chunk_size--;
-//				printf("PA and chunk_size == 2\n");
+				printf("PA and chunk_size == 2\n");
 			}
+		}
+		else if (chunk_size == 3 && track_of_rb == 0)
+		{
+			while (chunk_size > 1 && chunk_size <= 3)
+			{
+				if ((*b)->next && (*b)->nb < (*b)->next->nb)
+				{
+					printf("nb = %d ", (*b)->nb);
+					sb(b, 2, operations);
+					printf("SB and chunk_size = %d\n", chunk_size);
+				}
+				if ((*b)->next && (*b)->nb > (*b)->next->nb)
+				{
+					printf("nb = %d ", (*b)->nb);
+					pa(a, b, 2, operations);
+					chunk_size--;
+					printf("PA and chunk_size = %d\n", chunk_size);
+				}
+			}
+			if (chunk_size == 1)
+			{
+				if ((*a)->next && (*a)->nb > (*a)->next->nb)
+				{
+					printf("nb = %d ", (*b)->nb);
+					sa(a, 2, operations);
+					printf("SA\n");
+				}
+				printf("nb = %d ", (*b)->nb);
+				pa(a, b, 2, operations);
+				chunk_size--;
+				printf("PA and chunk_size = %d\n", chunk_size);
+			}
+				printf("|track_of_rb = %d and chunk_size = %d|\n", track_of_rb, chunk_size);
 		}
 		else
 		{
@@ -461,51 +715,63 @@ int	midpoint_sort_b_last(t_lst **a, t_lst **b, int mid_nb_b, int chunk_size)
 			{
 				if ((*b)->next && (*b)->nb < (*b)->next->nb && chunk_size >= 2)
 				{
-//					printf("nb = %d ", (*b)->nb);
-					sa_sb(b, 'b', 1);
-//					printf("SB\n");
+					printf("nb = %d ", (*b)->nb);
+					sb(b, 2, operations);
+					printf("SB\n");
 				}
-//				printf("nb = %d PA\n", (*b)->nb);
-				pa(a, b, 1);
+				printf("nb = %d PA\n", (*b)->nb);
+				pa(a, b, 2, operations);
 				chunk_size--;
 				track_of_pa++;
 
-//				printf("|track_of_pa = %d and chunk_size = %d|\n", track_of_pa, chunk_size);
-			//	if ((*a)->next && (*a)->nb > (*a)->next->nb)
+				printf("|track_of_pa = %d and chunk_size = %d|\n", track_of_pa, chunk_size);
+			//	if ((*a)->next && (*a)->nb < (*a)->next->nb)
 //	not		//	{
 //necessary	//		printf("nb = %d ", (*b)->nb);
-			//		sa_sb(a, 'a', 1);
+			//		sa(a, 2, operations);
 			//		printf("SA\n");
 			//	}
 			}
 			while (chunk_size && (*b)->nb <= mid_nb_b)// && chunk_size > len)
 			{
-//				printf("nb = %d ", (*b)->nb);
-				ra_rb(b, 'b', 1);
+				printf("nb = %d ", (*b)->nb);
+				rb(b, 2, operations);
 				chunk_size--;
 				track_of_rb++;
-//				printf("|track_of_rb = %d and chunk_size = %d|\n", track_of_rb, chunk_size);
+				printf("|track_of_rb = %d and chunk_size = %d|\n", track_of_rb, chunk_size);
 			}
 		}
 		if (track_of_rb > 0 && chunk_size == 0)
 		{
 			while (track_of_rb--)
 				chunk_size++;
-//			printf("|track_of_pa = %d and chunk_size = %d|\n", track_of_pa, chunk_size);
+			printf("|track_of_pa = %d and chunk_size = %d|\n", track_of_pa, chunk_size);
 			if (track_of_pa >= 3 && chunk_is_sort((*a), 0, track_of_pa) == -1)
 			{
 				while (track_of_pa > 2)
 				{
 
-//					printf("ENTERED SORTING A AGAIN -> ");
-					ret_sorting = midpoint_sort_a_from_b_1(a, b, track_of_pa);
+					printf("ENTERED SORTING A AGAIN -> ");
+					ret_sorting = midpoint_sort_a_from_b_1(a, b, track_of_pa, operations);
 					track_of_pa = track_of_pa - ret_sorting;
 					chunk_size = chunk_size + ret_sorting;
-//					printf("after sorting a again -> |TRACK PA = %d and CHUNK SIZE = %d|\n", track_of_pa, chunk_size);
+					printf("after sorting a again -> |TRACK PA = %d and CHUNK SIZE = %d|\n", track_of_pa, chunk_size);
 				}
-				if ((*a)->next && (*a)->nb > (*a)->next->nb)//leave it here or inside midpoint_sort_a_from_b_2????
-					sa_sb(a, 'a', 1);
+				if ((*a)->next && (*a)->nb > (*a)->next->nb)
+				{
+					printf("nb = %d ", (*b)->nb);
+					sa(a, 2, operations);
+					printf("SA\n");
+				}
+
 			}
+			if ((*a)->next && (*a)->nb > (*a)->next->nb)
+			{
+				printf("nb = %d ", (*b)->nb);
+				sa(a, 2, operations);
+				printf("SA\n");
+			}
+
 			if (chunk_size > 0)
 				return (chunk_size);
 		}
@@ -513,7 +779,7 @@ int	midpoint_sort_b_last(t_lst **a, t_lst **b, int mid_nb_b, int chunk_size)
 	return (0);
 }
 
-int	midpoint_sort_b(t_lst **a, t_lst **b, int mid_nb_b, int chunk_size)
+int	midpoint_sort_b(t_lst **a, t_lst **b, int mid_nb_b, int chunk_size, t_list **operations)
 {
 	int	track_of_rb;
 	int	track_of_pa;
@@ -524,97 +790,136 @@ int	midpoint_sort_b(t_lst **a, t_lst **b, int mid_nb_b, int chunk_size)
 	track_of_pa = 0;
 	ret_sorting = 0;
 	chunk_size_tmp = chunk_size;
-	while (chunk_size >= 0)
+	while (chunk_size > 0)
 	{
 		if (chunk_size == 2 && track_of_rb == 0)
 		{
 			if ((*b)->next && (*b)->nb < (*b)->next->nb)
 			{
-//				printf("nb = %d ", (*b)->nb);
-				sa_sb(b, 'b', 1);
-//				printf("SB and chunk_size == 2\n");
+				printf("nb = %d ", (*b)->nb);
+				sb(b, 2, operations);
+				printf("SB and chunk_size == 2\n");
 			}
 			while ((*b) && chunk_size > 0)
 			{
-//				printf("nb = %d ", (*b)->nb);
-				pa(a, b, 1);
+				printf("nb = %d ", (*b)->nb);
+				pa(a, b, 2, operations);
 				chunk_size--;
-//				printf("PA and chunk_size == 2\n");
+				printf("PA and chunk_size == 2\n");
 			}
+		}
+		else if (chunk_size == 3 && track_of_rb == 0)
+		{
+			while (chunk_size > 1 && chunk_size <= 3)
+			{
+				if ((*b)->next && (*b)->nb < (*b)->next->nb)
+				{
+					printf("nb = %d ", (*b)->nb);
+					sb(b, 2, operations);
+					printf("SB and chunk_size = %d\n", chunk_size);
+				}
+				if ((*b)->next && (*b)->nb > (*b)->next->nb)
+				{
+					printf("nb = %d ", (*b)->nb);
+					pa(a, b, 2, operations);
+					chunk_size--;
+					printf("PA and chunk_size = %d\n", chunk_size);
+				}
+			}
+			if (chunk_size == 1)
+			{
+				if ((*a)->next && (*a)->nb > (*a)->next->nb)
+				{
+					printf("nb = %d ", (*b)->nb);
+					sa(a, 2, operations);
+					printf("SA\n");
+				}
+				printf("nb = %d ", (*b)->nb);
+				pa(a, b, 2, operations);
+				chunk_size--;
+				printf("PA and chunk_size = %d\n", chunk_size);
+			}
+				printf("|track_of_rb = %d and chunk_size = %d|\n", track_of_rb, chunk_size);
 		}
 		else
 		{
 			while ((*b)->nb > mid_nb_b && chunk_size != 0)
 			{
+
+				printf("LOOP AGAIN\n");
 				if ((*b)->next && (*b)->nb < (*b)->next->nb && chunk_size >= 2)
 				{
-//					printf("nb = %d ", (*b)->nb);
-					sa_sb(b, 'b', 1);
-//					printf("SB\n");
+					printf("nb = %d ", (*b)->nb);
+					sb(b, 2, operations);
+					printf("SB\n");
 				}
-//				printf("nb = %d PA\n", (*b)->nb);
-				pa(a, b, 1);
+				printf("nb = %d PA\n", (*b)->nb);
+				pa(a, b, 2, operations);
 				chunk_size--;
 				track_of_pa++;
 			//	if ((*a)->next && (*a)->nb > (*a)->next->nb)
 //not		//	{
 //necessary	//		printf("nb = %d ", (*b)->nb);
-			//		sa_sb(a, 'a', 1);
+			//		sa(a, 2, operations);
 			//		printf("SA\n");
 			//	}
-//				printf("|track_of_pa = %d and chunk_size = %d|\n", track_of_pa, chunk_size);
+				printf("|track_of_pa = %d and chunk_size = %d|\n", track_of_pa, chunk_size);
 			}
-			while (chunk_size && (*b)->nb <= mid_nb_b)// && track_of_rb < chunk_size_tmp)
+			while (chunk_size && (*b)->nb <= mid_nb_b && chunk_size >= 1)// && track_of_rb < chunk_size_tmp)
 			{
-//				printf("nb = %d ", (*b)->nb);
-				ra_rb(b, 'b', 1);
+				printf("nb = %d ", (*b)->nb);
+				rb(b, 2, operations);
 				track_of_rb++;
 				chunk_size--;
-//				printf("|track_of_rb = %d and chunk_size = %d|\n", track_of_rb, chunk_size);
+				printf("|track_of_rb = %d and chunk_size = %d|\n", track_of_rb, chunk_size);
 			}
 		}
 		if (track_of_rb > 0 && chunk_size == 0)
 		{
 			while (track_of_rb)
 			{
-//				printf("nb = %d ", (*b)->nb);
-				rra_rrb(b, 'b', 1);
-//				printf("RRB\n");
+				printf("nb = %d ", (*b)->nb);
+				rrb(b, 2, operations);
+				printf("RRB\n");
 				chunk_size++;
 				track_of_rb--;
 			}
-//			printf("|track_of_pa = %d and chunk_size = %d|\n", track_of_pa, chunk_size);
+			printf("|track_of_pa = %d and chunk_size = %d|\n", track_of_pa, chunk_size);
 			if (track_of_pa >= 3 && chunk_is_sort((*a), 0, track_of_pa) == -1)
 			{
 
 				while (track_of_pa > 2)
 				{
 
-//					printf("ENTERED SORTING A AGAIN -> ");
-					ret_sorting = midpoint_sort_a_from_b_1(a, b, track_of_pa);
+					printf("ENTERED SORTING A AGAIN -> ");
+					ret_sorting = midpoint_sort_a_from_b_1(a, b, track_of_pa, operations);
 					track_of_pa = track_of_pa - ret_sorting;
 					chunk_size = chunk_size + ret_sorting;
-//					printf("after sorting a again -> |TRACK PA = %d and CHUNK SIZE = %d|\n", track_of_pa, chunk_size);
+					printf("after sorting a again -> |TRACK PA = %d and CHUNK SIZE = %d|\n", track_of_pa, chunk_size);
 				}
-				if ((*a)->next && (*a)->nb > (*a)->next->nb)//leave it here or inside midpoint_sort_a_from_b_2????
-					sa_sb(a, 'a', 1);
-
+				if ((*a)->next && (*a)->nb > (*a)->next->nb)
+				{
+					printf("nb = %d ", (*b)->nb);
+					sa(a, 2, operations);
+					printf("SA\n");
+				}
 			}
-			//printf("NEW CHUNK SIZE = %d\n", chunk_size);
+			if ((*a)->next && (*a)->nb > (*a)->next->nb)
+			{
+				printf("nb = %d ", (*b)->nb);
+				sa(a, 2, operations);
+				printf("SA\n");
+			}
+
 			if (chunk_size > 0)
-				return (chunk_size);// return here and add chunks-nb with chunk_size into the list or deal with this new chunk here cause it heas to check if it has 1, 2 or more than 3 numbers(midpoint sorting) over again.
-		//	while (chunk_size > 0)
-		//	{
-		//		pa(a, b, 1);
-		//		chunk_size--;
-		//	}
+				return (chunk_size);
 		}
 	}
 	return (0);
 }
 
 
-void	sort_max_100(t_lst **a, t_lst **b)
+void	sort_max_100(t_lst **a, t_lst **b, t_list **operations)
 {
 	char	**saved_a;
 	char	**sorted_a;
@@ -632,7 +937,7 @@ void	sort_max_100(t_lst **a, t_lst **b)
 			return ;
 
 		///test
-/*		int	i = 0;
+	/*	int	i = 0;
 		while (saved_a[i])
 		{
 			printf("saved a = %s\n", saved_a[i]);
@@ -658,7 +963,7 @@ void	sort_max_100(t_lst **a, t_lst **b)
 		///test*/
 
 	//	printf("LENGTH B = %d\n", lstlen(b));
-		if (lstlen(b) == 0)
+/*		if (lstlen(b) == 0)
 		{
 			chunk_len = 0;
 		//	printf("CHUNK_LEN = %d\n", chunk_len);
@@ -667,13 +972,15 @@ void	sort_max_100(t_lst **a, t_lst **b)
 		{
 			chunk_len = chunks->nb;
 		//	printf("CHUNK_LEN = %d\n", chunk_len);
-		}
+		}*/
 
-		midpoint_sort_a(a, b, mid_nb_a, chunk_len);
+		midpoint_sort_a(a, b, mid_nb_a, operations);//, chunk_len);
 		lstadd_front(&chunks, lstnew(lstlen(b)));// to know the size of the chunks of b
 
+
+
 	///test
-	/*	t_lst *tmp;
+/*		t_lst *tmp;
 		t_lst *btmp;
 		tmp = (*a);
 		btmp = (*b);
@@ -697,12 +1004,33 @@ void	sort_max_100(t_lst **a, t_lst **b)
 
 
 		ft_freetab(sorted_a);
+
 	//	ft_freetab(saved_a);
 	}
-	if ((*a)->next && (*a)->nb > (*a)->next->nb)
-		sa_sb(a, 'a', 1);
 
+	if (((*a)->next && (*a)->nb > (*a)->next->nb) && ((*b)->next && (*b)->nb < (*b)->next->nb))
+	{
+		printf("fez ss?\n");
+		ss(a, b, 2, operations);
+	}
+	else if ((*a)->next && (*a)->nb > (*a)->next->nb)
+	{
+		printf("pq nao fez ss?\n");
+		sa(a, 2, operations);
+	}
 
+	frombtoa(a, b, operations);
+
+/// test operations
+//	t_list	*operations_tmp;
+//	operations_tmp = (*operations);
+//	while ((*operations))//operations_tmp)
+//	{
+//		printf("%s", (*operations)->content);//operations_tmp
+//		(*operations) = (*operations)->next;//operations_tmp = operations_tmp->next;
+//	}
+/// test operations
+//
 //// test
 	/*	t_lst *tmp;
 		t_lst *btmp;
@@ -729,12 +1057,15 @@ void	sort_max_100(t_lst **a, t_lst **b)
 		{
 			printf("\n ------> b chunks size = %d\n", chunks->nb);
 			chunks = chunks->next;
-		}*/
-///test
+		}
+///test*/
+//
 
-/////////////// SORT B //////////////////////
 
-	char	**saved_b;
+
+///////////////////////////////////// SORT B ////////////////////////////////////////////
+
+/*	char	**saved_b;
 	char	**sorted_b;
 	int		mid_nb_b;
 	int		chunk_size;
@@ -758,22 +1089,22 @@ void	sort_max_100(t_lst **a, t_lst **b)
 				chunk_size = chunks->nb;
 				if (new_chunk_size > 0)
 					chunk_size = new_chunk_size;
-//				printf("\nLAST CHUNK - > chunk_size = %d\n", chunk_size);
+				printf("\nchunk_size of LAST CHUNK = %d\n", chunk_size);
 			}
 
-//			printf("------> b chunk_size from beggining OF LOOP= %d\n", chunk_size);
+			printf("------> b chunk_size from beggining OF LOOP= %d\n", chunk_size);
 
 			if (chunk_size == 1)
-				pa(a, b, 1);
+				pa(a, b, 2, operations);
 			else if (chunk_size == 2)
 			{
 				if ((*b)->next && (*b)->nb < (*b)->next->nb)
-					sa_sb(b, 'b', 1);
+					sb(b, 2, operations);
 				while ((*b) && chunk_size)
 				{
-					pa(a, b, 1);
+					pa(a, b, 2, operations);
 					chunk_size--;
-//					printf("ENTERED pa, CHUNKS == 2, new_chunk_size = 0  and chunk_size = %d\n", chunk_size);
+					printf("ENTERED pa, CHUNK_SIZE == 2, new_chunk_size = 0 and chunk_size = %d\n", chunk_size);
 				}
 				new_chunk_size = 0;
 			}
@@ -783,14 +1114,14 @@ void	sort_max_100(t_lst **a, t_lst **b)
 					return ;
 
 		///test
-/*				int i = 0;
+				int i = 0;
 				while (saved_b[i])
 				{
 					printf("saved b = %s\n", saved_b[i]);
 					i++;
 				}
 				printf("\n---------------------------------------------------\n\n");
-		///test*/
+		///test
 
 				if ((sorted_b = sort_array(&saved_b[0])) == NULL)
 					return ;
@@ -798,7 +1129,7 @@ void	sort_max_100(t_lst **a, t_lst **b)
 					return ;
 
 		///test
-/*				i = 0;
+				i = 0;
 				while (sorted_b[i])
 				{
 					printf("sorted b = %s\n", sorted_b[i]);
@@ -806,10 +1137,10 @@ void	sort_max_100(t_lst **a, t_lst **b)
 				}
 				printf("\n-> mid_nb_b = %d\n", mid_nb_b);
 				printf("\n---------------------------------------------------\n\n");
-		///test*/
+		///test
 
 		//// test
-		/*		t_lst *tmp;
+				t_lst *tmp;
 				t_lst *btmp;
 				t_lst *chunk_tmp;
 				btmp = (*b);
@@ -836,20 +1167,20 @@ void	sort_max_100(t_lst **a, t_lst **b)
 					chunk_tmp = chunk_tmp->next;
 				}
 				printf("\n---------------------------------------------------\n");
-		///test*/
+		///test
 
 				if (chunk_is_sort((*b), -1, chunk_size) == 0)
 				{
-//					printf("CHUNK IS SORTED - PA\n");
+					printf("CHUNK IS SORTED - PA\n");
 					while (chunk_size--)
-						pa(a, b, 1);
+						pa(a, b, 2, operations);
 					new_chunk_size = 0;
 				}
 				else if (chunk_is_sort((*b), -1, chunk_size) == -1 && chunks->next)
 				{
-//					printf("|||chunks size = %d\n", chunk_size);
-//					printf("CHUNK IS NOT SORTED\n");
-					if ((ret = midpoint_sort_b(a, b, mid_nb_b, chunk_size)) > 0)
+					printf("|||chunks size = %d\n", chunk_size);
+					printf("CHUNK IS NOT SORTED\n");
+					if ((ret = midpoint_sort_b(a, b, mid_nb_b, chunk_size, operations)) > 0)
 					{
 						new_chunk_size = ret;
 					//	if (ret == 2 || ret == 3)
@@ -857,22 +1188,21 @@ void	sort_max_100(t_lst **a, t_lst **b)
 					}
 					else
 						new_chunk_size = 0;
-//					printf("NEW CHUNK SIZE = %d\n", new_chunk_size);
-				//	printf("|||chunks->nb = %d\n", chunks->nb);
+					printf("NEW CHUNK SIZE = %d\n", new_chunk_size);
+
 				}
 				else
 				{
-					if ((ret = midpoint_sort_b_last(a, b, mid_nb_b, chunk_size)) > 0)
+					if ((ret = midpoint_sort_b_last(a, b, mid_nb_b, chunk_size, operations)) > 0)
 						new_chunk_size = ret;
 					else
 						new_chunk_size = 0;
 				}
-			//
 
 				ft_freetab(sorted_b);
 			}
 		//// test
-/*				t_lst *tmp;
+				t_lst *tmp;
 				t_lst *btmp;
 				t_lst *chunk_tmp;
 				btmp = (*b);
@@ -901,19 +1231,13 @@ void	sort_max_100(t_lst **a, t_lst **b)
 				if (!btmp)
 					printf("B IS EMPTY\n");
 				printf("\n---------------------------------------------------\n");
-		///test*/
+		///test
 			if (new_chunk_size == 0)
 				chunks = chunks->next;
-//			printf("\n\nLOOP AGAIN with NEW chunk size = %d\nif size == 0, loop with chunk->next nb\n", new_chunk_size);
+			printf("\n\nLOOP AGAIN with NEW chunk size = %d\nif size == 0, loop with chunk->next nb\n", new_chunk_size);
 		}
-	}
-/*	t_lst *tmp;
-	tmp = (*a);
-	while (tmp)
-	{
-		printf("a = %d\n", tmp->nb);
-		tmp = tmp->next;
 	}*/
+//	return ((*operations));
 }
 
 

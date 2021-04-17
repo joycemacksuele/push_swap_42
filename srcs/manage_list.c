@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 02:01:49 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/01 03:25:48 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/15 02:03:46 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,22 @@ void	free_list(void *operations)
 		tmp = NULL;
 	}
 }*/
+
+
+t_list	*create_list_2(char *line)
+{
+	t_list	*operations;
+	t_list	*tmp;
+
+	operations = NULL;
+	tmp = NULL;
+	if (line != NULL)
+	{
+		tmp = ft_lstnew(line);
+		ft_lstadd_back(&operations, tmp);
+	}
+	return (operations);
+}
 
 /*
  * Create and store the output of the push_swap program in a linked list.
