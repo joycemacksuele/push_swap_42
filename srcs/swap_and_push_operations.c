@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 02:13:20 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/17 03:51:18 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/17 22:42:48 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	print_lists(t_lst **a, t_lst **b)
 	else
 		btmp = NULL;
 	i = 1;
-	while (tmp)
+/*	while (tmp)
 	{
 	//	while (i-- >= 0)
 	//	{
@@ -48,7 +48,7 @@ void	print_lists(t_lst **a, t_lst **b)
 		btmp = btmp->next;
 	}
 
-	printf("\n---------------------------------------------------\n");
+	printf("\n---------------------------------------------------\n");*/
 }
 
 /*
@@ -68,7 +68,7 @@ void	sa(t_lst **a, int fd, t_list **operations)
 		{
 			ft_lstadd_back(operations, ft_lstnew(opts));
 /// delete
-			printf("\n--->>> %s", "sa\n");
+		//	printf("\n--->>> %s", "sa\n");
 			print_lists(a, 0);
 			g_count_operations++;
 /// delete
@@ -106,7 +106,7 @@ void	sb(t_lst **b, int fd, t_list **operations)
 		{
 			ft_lstadd_back(operations, ft_lstnew(opts));
 /// delete
-			printf("\n--->>> %s", "sb\n");
+			//printf("\n--->>> %s", "sb\n");
 			print_lists(0, b);
 			g_count_operations++;
 /// delete
@@ -158,7 +158,7 @@ void	ss(t_lst **a, t_lst **b, int fd, t_list **operations)
 		}
 
 /// delete
-		printf("\n--->>> %s", "ss\n");
+		//printf("\n--->>> %s", "ss\n");
 		print_lists(a, b);
 		g_count_operations++;
 /// delete
@@ -210,7 +210,7 @@ void	pb(t_lst **a, t_lst **b, int fd, t_list **operations)
 		}
 
 /// delete
-		printf("\n--->>> %s", "pb\n");
+		//printf("\n--->>> %s", "pb\n");
 		print_lists(a, b);
 		g_count_operations++;
 /// delete
@@ -272,7 +272,7 @@ void	pa(t_lst **a, t_lst **b, int fd, t_list **operations)
 		}
 
 /// delete
-		printf("\n--->>> %s", "pa\n");
+		//printf("\n--->>> %s", "pa\n");
 		print_lists(a, b);
 		g_count_operations++;
 /// delete

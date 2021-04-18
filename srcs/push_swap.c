@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/17 02:57:54 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/18 03:32:09 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ void	operations_corrector(t_list **operations)
 	last = ft_lstlast((*operations));
 	while (op_tmp)
 	{
-		printf("op = %s", op_tmp->content);
+	//	printf("op = %s", op_tmp->content);
 		if (op_tmp->next)
 		{
-			if (ft_strcmp(op_tmp->content, "sa\n") == 0)
+		/*	if (ft_strcmp(op_tmp->content, "sa\n") == 0)
 			{
 				if (ft_strcmp(op_tmp->next->content, "sa\n") == 0)
 					op_tmp = op_tmp->next;
@@ -58,7 +58,7 @@ void	operations_corrector(t_list **operations)
 					ss(NULL, NULL, 1, NULL);
 				else
 					write_operations_on_stdout(op_tmp->content);
-				printf("----\n");
+		//		printf("----\n");
 			}
 			else if (ft_strcmp(op_tmp->content, "sb\n") == 0)
 			{
@@ -68,7 +68,7 @@ void	operations_corrector(t_list **operations)
 					ss(NULL, NULL, 1, NULL);
 				else
 					write_operations_on_stdout(op_tmp->content);
-				printf("----\n");
+		//		printf("----\n");
 			}
 			else if (ft_strcmp(op_tmp->content, "pa\n") == 0)
 			{
@@ -76,7 +76,7 @@ void	operations_corrector(t_list **operations)
 					op_tmp = op_tmp->next;
 				else
 					write_operations_on_stdout(op_tmp->content);
-				printf("----\n");
+		//		printf("----\n");
 			}
 			else if (ft_strcmp(op_tmp->content, "pb\n") == 0)
 			{
@@ -84,7 +84,7 @@ void	operations_corrector(t_list **operations)
 					op_tmp = op_tmp->next;
 				else
 					write_operations_on_stdout(op_tmp->content);
-				printf("----\n");
+		//		printf("----\n");
 			}
 			else if (ft_strcmp(op_tmp->content, "ra\n") == 0)
 			{
@@ -103,12 +103,12 @@ void	operations_corrector(t_list **operations)
 				}
 				else if (ft_strcmp(op_tmp->next->content, "rra\n") == 0)
 				{
-					printf("op_tmp->next->next->content = %s\n", op_tmp->next->next->content);
+		//			printf("op_tmp->next->next->content = %s\n", op_tmp->next->next->content);
 					op_tmp = op_tmp->next;
 				}
 				else
 					write_operations_on_stdout(op_tmp->content);
-				printf("----\n");
+		//		printf("----\n");
 			}
 			else if (ft_strcmp(op_tmp->content, "rb\n") == 0)
 			{
@@ -129,7 +129,7 @@ void	operations_corrector(t_list **operations)
 					op_tmp = op_tmp->next;
 				else
 					write_operations_on_stdout(op_tmp->content);
-				printf("----\n");
+		//		printf("----\n");
 			}
 			else if (ft_strcmp(op_tmp->content, "rr\n") == 0)
 			{
@@ -142,7 +142,7 @@ void	operations_corrector(t_list **operations)
 					op_tmp = op_tmp->next;
 				else
 					write_operations_on_stdout(op_tmp->content);
-				printf("----\n");
+		//		printf("----\n");
 			}
 			else if (ft_strcmp(op_tmp->content, "rra\n") == 0)
 			{
@@ -163,7 +163,7 @@ void	operations_corrector(t_list **operations)
 					op_tmp = op_tmp->next;
 				else
 					write_operations_on_stdout(op_tmp->content);
-				printf("----\n");
+		//		printf("----\n");
 			}
 			else if (ft_strcmp(op_tmp->content, "rrb\n") == 0)
 			{
@@ -184,7 +184,7 @@ void	operations_corrector(t_list **operations)
 					op_tmp = op_tmp->next;
 				else
 					write_operations_on_stdout(op_tmp->content);
-				printf("----\n");
+		//		printf("----\n");
 			}
 			else if (ft_strcmp(op_tmp->content, "rrr\n") == 0)
 			{
@@ -195,10 +195,10 @@ void	operations_corrector(t_list **operations)
 					(ft_strcmp(op_tmp->next->content, "rb\n") == 0 &&
 					ft_strcmp(op_tmp->next->next->content, "ra\n") == 0))
 					op_tmp = op_tmp->next;
-				else
+				else*/
 					write_operations_on_stdout(op_tmp->content);
-				printf("----\n");
-			}
+		//		printf("----\n");
+		//	}
 		}
 		op_tmp = op_tmp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 02:13:20 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/16 01:14:31 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/17 22:43:10 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	rrr(t_lst **a, t_lst **b, int fd, t_list **operations)
 		}
 
 /// delete
-		printf("\n--->>> %s", "rrr\n");
+	//	printf("\n--->>> %s", "rrr\n");
 		print_lists(a, b);
 		g_count_operations++;
 /// delete
@@ -93,7 +93,7 @@ void	rra(t_lst **a, int fd, t_list **operations)
 		(*a) = new;
 
 /// delete
-		printf("\n--->>> %s", "rra\n");
+		//printf("\n--->>> %s", "rra\n");
 		print_lists(a, NULL);
 		g_count_operations++;
 /// delete
@@ -135,7 +135,7 @@ void	rrb(t_lst **b, int fd, t_list **operations)
 		(*b) = new;
 
 /// delete
-		printf("\n--->>> %s", "rrb\n");
+		//printf("\n--->>> %s", "rrb\n");
 		print_lists(NULL, b);
 		g_count_operations++;
 /// delete

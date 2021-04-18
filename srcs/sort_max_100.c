@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/17 05:28:02 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/18 04:38:35 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,8 +170,8 @@ void	chunks(t_lst **a, t_lst **b, int chunck_end, t_list **operations)
 void	frombtoa(t_lst **a, t_lst **b, t_list **operations)
 {
 	t_lst	*head;
-	t_lst	*bigger1;
-	t_lst	*bigger2;
+	int		bigger1;
+	int		bigger2;
 	int		i1;
 	int		i2;
 	int		track_of_pa;
@@ -180,7 +180,7 @@ void	frombtoa(t_lst **a, t_lst **b, t_list **operations)
 	{
 
 //// test
-	/*	t_lst *tmp;
+		t_lst *tmp;
 		t_lst *btmp;
 		tmp = (*a);
 		btmp = (*b);
@@ -200,7 +200,7 @@ void	frombtoa(t_lst **a, t_lst **b, t_list **operations)
 			btmp = btmp->next;
 		}
 		printf("\n---------------------------------------------------\n");
-//// test*/
+//// test
 
 	//	if (lstlen(b) >= chunck_end || !(*a))
 	//		break ;
@@ -209,13 +209,13 @@ void	frombtoa(t_lst **a, t_lst **b, t_list **operations)
 		i1 = 0;
 		i1 = search_bigger_number(&head, -1, -1);
 	//	i1 = search_lower_number(&head, -1, -1);
-		bigger1 = head;
+		bigger1 = head->nb;
 		head = (*b);
 		printf("head of b = %d\n", head->nb);
 		i2 = 0;
-		i2 = search_bigger_number(&head, 0, bigger1->nb);
-	//	i2 = search_lower_number(&head, 1, bigger1->nb);
-		bigger2 = head;
+		i2 = search_bigger_number(&head, 0, bigger1);
+	//	i2 = search_lower_number(&head, 1, bigger1);
+		bigger2 = head->nb;
 
 //// test
 		printf("\n\n------\n");
@@ -223,52 +223,70 @@ void	frombtoa(t_lst **a, t_lst **b, t_list **operations)
 		printf("length of a = %d\n\n", lstlen(a));
 		if ((*b)->next)
 		{
-			printf("bigger1 number = %d\n", bigger1->nb);
+			printf("bigger1 number = %d\n", bigger1);
 			printf("i1 = %d\n\n", i1);
 		}
 		if ((*b)->next)
 		{
-			printf("bigger2 number = %d\n", bigger2->nb);
+			printf("bigger2 number = %d\n", bigger2);
 			printf("i2 = %d\n", i2);
 		}
 		printf("------\n\n");
 //// test
-
+		printf("ENTRANDO NO LOOP QUE FAZ SB ou RB, RRB e PA\n\n");
 		while (track_of_pa < 2)
 		{
-		// 100 NUMEROS FUNCIONANDO... ALGO ERRADO NO LOOP DO FROM A TO B COM 500 NUMEROS com o rrb
-
 			printf("---------------\nlstlen(b) - 1 - i2 = %d\ni1 = %d\ni2 = %d\n---------------\n", (lstlen(b) - 1) - i2, i1, i2);
-			while ((bigger1 && bigger2 && (*a)) &&
-				((*b)->nb != bigger1->nb && (*b)->nb != bigger2->nb))// HAVE TO CHANGE THOSE STATEMENTS
+			if (((*b)->nb != bigger1 && (*b)->nb != bigger2) &&
+				((*b)->next && ((*b)->next->nb == bigger1 ||
+				(*b)->next->nb == bigger2)) &&
+				((i1 <= 2 || i1 > lstlen(b) / 2) && (i2 <= 2 || i2 > lstlen(b) / 2)))
 			{
-				if (i1 < ((lstlen(b) - 1) - i2))// HAVE TO CHANGE THOSE STATEMENTS
-				{
-					printf("RB CALLED\n");
-					rb(b, 2, operations);
-				}
-				else if (i1 >= ((lstlen(b) - 1) - i2))// HAVE TO CHANGE THOSE STATEMENTS
-					rrb(b, 2, operations);
+				sb(b, 2, operations);
+				printf("SB CALLED ONCEEE\n");
+				printf("head of b = %d\n", (*b)->nb);
+				printf("b->next = %d\n", (*b)->next->nb);
 			}
-			if ((*b)->nb == bigger1->nb || (*b)->nb == bigger2->nb)
+			printf("bigger1 number = %d\n", bigger1);
+			printf("bigger2 number = %d\n", bigger2);
+
+			while ((bigger1 && bigger2 && (*a)) &&
+				((*b)->nb != bigger1 && (*b)->nb != bigger2))
+			{
+				if (i1 < ((lstlen(b) - 1) - i2))
+				{
+					rb(b, 2, operations);
+					printf("RB CALLED\n");
+				}
+				else if (i1 >= ((lstlen(b) - 1) - i2))
+				{
+					rrb(b, 2, operations);
+					printf("RRB CALLED\n");
+				}
+			}
+			if ((*b)->nb == bigger1 || (*b)->nb == bigger2)
 			{
 				track_of_pa++;
-				if ((*b)->nb == bigger1->nb)
+				if ((*b)->nb == bigger1)
 					i1 = i2;// i1 - track_of_pa;
-				else if ((*b)->nb == bigger2->nb)
+				else if ((*b)->nb == bigger2)
 					i2 = i1;// i2 - track_of_pa;
-				pa(a, b, 2, operations);
-					printf("PA CALLED\n");
+
+				pa(a, b, 2, operations);// mover p baixo??:
+				printf("PA CALLED\n");
+				printf("head of a = %d\n", (*a)->nb);
 			}
+
+			printf("track_of_pa = %d\n", track_of_pa);
 		}
-		if (((*a)->next && (*a)->nb > (*a)->next->nb) && ((*b)->next && (*b)->nb < (*b)->next->nb))
+		if ((*a) && ((*a)->next && (*a)->nb > (*a)->next->nb) && ((*b)->next && (*b)->nb < (*b)->next->nb))
 		{
 			printf("fez ss  from a to b\n");
 			ss(a, b, 2, operations);
 		}
 		else if ((*a)->nb > (*a)->next->nb)
 		{
-			printf("pq nao fez ss? from a to b\n");
+			printf("SA -> pq nao fez ss? from a to b\n");
 			sa(a, 2, operations);
 		}
 		if (lst_is_sort((*b), -1) == -1)
@@ -286,7 +304,7 @@ void	frombtoa(t_lst **a, t_lst **b, t_list **operations)
 
 
 //// test
-/*
+
 		printf("\n---------------------------------------------------\n");
 		tmp = (*a);
 		btmp = (*b);
@@ -306,7 +324,7 @@ void	frombtoa(t_lst **a, t_lst **b, t_list **operations)
 			btmp = btmp->next;
 		}
 		printf("\n---------------------------------------------------\n");
-//// test*/
+//// test
 
 //		printf("head of b = %d\n", (*b)->nb);
 //		printf("length of b = %d\n", lstlen(b));
@@ -433,6 +451,56 @@ int	midpoint_sort_a_from_b_2(t_lst **a, t_lst **b, int mid_nb, int chunk_size, t
 	return (ret_chunk_size);
 }
 
+int	midpoint_sort_a_500(t_lst **a, t_lst **b, int mid_nb, t_list **operations)//, int chunk_len)
+{
+	t_lst	*end_a;
+	t_lst	*end_b;
+	int		len_a;
+	int		len;
+	int		ret_chunk_size;
+	int		track_of_pb1;
+	int		track_of_pb2;
+
+	end_a = NULL;
+	end_b = NULL;
+	len_a = lstlen(a) + lstlen(b) / 4;
+	len = lstlen(a) + lstlen(b) / 4;
+	track_of_pb1 = 0;
+	track_of_pb2 = 0;
+	ret_chunk_size = 0;
+	while (len--)
+	{
+		while ((*a)->nb < mid_nb)
+		{
+			pb(a, b, 2, operations);
+			track_of_pb1++;
+			ret_chunk_size++;
+		}
+		if ((*a)->nb >= mid_nb)
+		{
+			end_a = lstlast((*a));
+			while (end_a->nb < mid_nb)
+			{
+				rra(a, 2, operations);
+				pb(a, b, 2, operations);
+				track_of_pb1++;
+				track_of_pb2++;
+				ret_chunk_size++;
+				end_a = lstlast((*a));
+				end_b = lst_before_last((*b));
+			//	printf("track_of_pb2 = %d\n", track_of_pb2);
+			}
+			while ((*a)->nb >= mid_nb && track_of_pb2 < len_a)
+			{
+				track_of_pb2++;
+			//	printf("RA LOOP ---\n");
+				ra(a, 2, operations);
+			}
+		}
+	}
+	return (ret_chunk_size);
+}
+
 
 int	midpoint_sort_a(t_lst **a, t_lst **b, int mid_nb, t_list **operations)//, int chunk_len)
 {
@@ -447,36 +515,23 @@ int	midpoint_sort_a(t_lst **a, t_lst **b, int mid_nb, t_list **operations)//, in
 	end_a = NULL;
 	end_b = NULL;
 	len_a = lstlen(a) / 2;
+	len = lstlen(a) / 2;
 	track_of_pb1 = 0;
 	track_of_pb2 = 0;
-//	if (chunk_len > 0)
-//		len = chunk_len;
-//	else
-	len = lstlen(a) / 2;
 	ret_chunk_size = 0;
 	while (len--)
 	{
 		while ((*a)->nb < mid_nb)
 		{
 			pb(a, b, 2, operations);
-		//	printf("operations->content = %s\n", (*operations)->content);
-
 			track_of_pb1++;
 			ret_chunk_size++;
-		/*	if (track_of_pb1 >= 2 && (*a)->next->nb < mid_nb)//optmizing
-				if ((*a)->nb < (*a)->next->nb && (*b)->nb > (*b)->next->nb)
-					ss(a, b, 2, operations);*/
 		}
 		if ((*a)->nb >= mid_nb)
 		{
 			end_a = lstlast((*a));
-		/*	if (!(end_b = lst_before_last((*b))))
-				printf("\n---> NULL <---\n");*/
 			while (end_a->nb < mid_nb)
 			{
-			/*	if (track_of_pb1 >= 2 && end_b->next && end_b->nb > end_b->next->nb)//optmizing
-					rrr(a, b, 2, operations);
-				else*/
 				rra(a, 2, operations);
 				pb(a, b, 2, operations);
 				track_of_pb1++;
@@ -484,26 +539,13 @@ int	midpoint_sort_a(t_lst **a, t_lst **b, int mid_nb, t_list **operations)//, in
 				ret_chunk_size++;
 				end_a = lstlast((*a));
 				end_b = lst_before_last((*b));
-				printf("track_of_pb2 = %d\n", track_of_pb2);
+			//	printf("track_of_pb2 = %d\n", track_of_pb2);
 			}
 			while ((*a)->nb >= mid_nb && track_of_pb2 < len_a)
 			{
-		/*		if (track_of_pb1 >= 2 && (*a)->next->nb >= mid_nb)//optmizing
-					if ((*a)->nb > (*a)->next->nb && (*b)->nb > (*b)->next->nb)
-						ss(a, b, 2, operations);
-
-				if (track_of_pb1 >= 2 && (*b)->nb > (*b)->next->nb)//optmizing
-					rr(a, b, 2, operations);
-		*/
-				printf("track_of_pb2 = %d\n", track_of_pb2);
-			//	else
-			//	{
-					track_of_pb2++;
-				//	printf("RA LOOP ---\n");
-					ra(a, 2, operations);
-			//	}
-				//	if (lstlen(b) == lstlen(b) - len_a / 2)//wrong here
-				//		break ;
+				track_of_pb2++;
+			//	printf("RA LOOP ---\n");
+				ra(a, 2, operations);
 			}
 		}
 	}
@@ -974,7 +1016,13 @@ void	sort_max_100(t_lst **a, t_lst **b, t_list **operations)
 		//	printf("CHUNK_LEN = %d\n", chunk_len);
 		}*/
 
-		midpoint_sort_a(a, b, mid_nb_a, operations);//, chunk_len);
+		if (lstlen(a) > 300)
+		{
+			printf("LEN A = %d\n", lstlen(a));
+			midpoint_sort_a_500(a, b, mid_nb_a, operations);
+		}
+		else
+			midpoint_sort_a(a, b, mid_nb_a, operations);//, chunk_len);
 		lstadd_front(&chunks, lstnew(lstlen(b)));// to know the size of the chunks of b
 
 
