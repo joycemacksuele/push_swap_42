@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/18 03:29:14 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/23 03:42:47 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	create_lists(char *opt, char **av)
 		ft_putstr_fd("KO\n", 1);
 	while (a)
 	{
-		printf("a = %d | ", a->nb);
+		//printf("a = %d | ", a->nb);
 		a = a->next;
 	}
 	//free_list(&operations);
@@ -145,7 +145,7 @@ int	read_operations(char **av)
 	ft_strdel(&opt);
 	if (ret_gnl == -1)
 	{
-		printf("ret gnl = %d\n", ret_gnl);
+		//printf("ret gnl = %d\n", ret_gnl);
 		return (-1);
 	}
 	return (0);

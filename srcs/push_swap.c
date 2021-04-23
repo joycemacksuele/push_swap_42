@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/18 03:32:09 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/23 03:39:52 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,7 @@ void	pick_algo(t_lst **a, t_lst **b, int ac)
 
 	operations_corrector(&operations);
 /// test operations
-	printf("============\n");
+//	printf("============\n");
 /*	while ((*operations_tmp))
 	{
 		printf("%s", (*operations_tmp)->content);
@@ -289,7 +289,7 @@ int	main(int ac, char **av)
 		free_lst(&a);
 		free_lst(&b);
 	}
-	printf("NUMBER OF REGISTERS BEFORE = %d\n", g_count_operations);
-	printf("NUMBER OF REGISTERS AFTER = %d\n", g_count_operations_after);
+//	printf("NUMBER OF REGISTERS BEFORE = %d\n", g_count_operations);
+//	printf("NUMBER OF REGISTERS AFTER = %d\n", g_count_operations_after);
 	return (0);
 }

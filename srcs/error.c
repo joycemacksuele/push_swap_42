@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:55:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/03/28 17:50:24 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/23 03:59:06 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	handle_wrong_ac(int ac)
 {
 	if (ac <= 1)
 	{
-		ft_putstr_fd("More than 1 signed integer argument needed!\n", 2);
+	//	ft_putstr_fd("More than 1 signed integer argument needed!\n", 2);
 		return (-1);
 	}
 	return (0);
