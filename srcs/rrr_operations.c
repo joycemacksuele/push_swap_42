@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 02:13:20 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/17 22:43:10 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/27 00:08:57 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,41 +16,22 @@
  * rrr: rra and rrb at the same time.
  */
 
-void	rrr(t_lst **a, t_lst **b, int fd, t_list **operations)
+void	rrr(t_lst **a, t_lst **b, int fd)
 {
-//	t_list	*new;
-	char	*opts;
 
-	opts = ft_strdup("rrr\n");
-	if (fd == 0 || fd == 2)
+	if ((*a)->next && (*b)->next)
 	{
-		if (fd == 2)
-			ft_lstadd_back(operations, ft_lstnew(opts));
-		//	*operations = create_list_2(opts);
-
-	//	printf("OPERATIONS->CONTENT = %s", (*operations)->content);
-	//	free(opts);
-		if ((*a)->next && (*b)->next)
-		{
-			rra(a, 0, NULL);
-			rrb(b, 0, NULL);
-		}
+		rra(a, 0);
+		rrb(b, 0);
+	}
 
 /// delete
 	//	printf("\n--->>> %s", "rrr\n");
-		print_lists(a, b);
-		g_count_operations++;
+	print_lists(a, b);
 /// delete
 
-	}
-//	ft_lstadd_back(operations, new);
-	else if (fd == 1)
-	{
-		ft_putstr_fd(opts, fd);
-		free(opts);
-		g_count_operations_after++;
-	}
-//	return ((*operations));
+	if (fd == 1)
+		ft_putstr_fd("rrr\n", fd);
 }
 
 /*
@@ -65,87 +46,53 @@ void	rrr(t_lst **a, t_lst **b, int fd, t_list **operations)
  * 5. the head of the main list *a or *b is now equal to the head of *new.
  */
 
-void	rra(t_lst **a, int fd, t_list **operations)
+void	rra(t_lst **a, int fd)
 {
 	t_lst	*last;
 	t_lst	*new;
-	char	*opts;
 
-
-	opts = ft_strdup("rra\n");
-	if (fd == 0 || fd == 2)
+	last = (*a);
+	new = (*a)->next;
+	while (new->next)
 	{
-		if (fd == 2)
-			ft_lstadd_back(operations, ft_lstnew(opts));
-		//	*operations = create_list_2(opts);
-
-	//	printf("OPERATIONS->CONTENT = %s", (*operations)->content);
-	//	free(opts);
-		last = (*a);
-		new = (*a)->next;
-		while (new->next)
-		{
-			last = new;
-			new = new->next;
-		}
-		last->next = NULL;
-		new->next = (*a);
-		(*a) = new;
+		last = new;
+		new = new->next;
+	}
+	last->next = NULL;
+	new->next = (*a);
+	(*a) = new;
 
 /// delete
 		//printf("\n--->>> %s", "rra\n");
-		print_lists(a, NULL);
-		g_count_operations++;
+	print_lists(a, NULL);
 /// delete
 
-	}
-	else if (fd == 1)
-	{
-		ft_putstr_fd(opts, fd);
-		free(opts);
-		g_count_operations_after++;
-	}
-//	return ((*operations));
+	if (fd == 1)
+		ft_putstr_fd("rra\n", fd);
 }
 
-void	rrb(t_lst **b, int fd, t_list **operations)
+
+void	rrb(t_lst **b, int fd)
 {
 	t_lst	*last;
 	t_lst	*new;
-	char	*opts;
 
-	opts = ft_strdup("rrb\n");
-	if (fd == 0 || fd == 2)
+	last = (*b);
+	new = (*b)->next;
+	while (new->next)
 	{
-		if (fd == 2)
-			ft_lstadd_back(operations, ft_lstnew(opts));
-		//	*operations = create_list_2(opts);
-
-	//	printf("OPERATIONS->CONTENT = %s", (*operations)->content);
-//		free(opts);
-		last = (*b);
-		new = (*b)->next;
-		while (new->next)
-		{
-			last = new;
-			new = new->next;
-		}
-		last->next = NULL;
-		new->next = (*b);
-		(*b) = new;
+		last = new;
+		new = new->next;
+	}
+	last->next = NULL;
+	new->next = (*b);
+	(*b) = new;
 
 /// delete
 		//printf("\n--->>> %s", "rrb\n");
-		print_lists(NULL, b);
-		g_count_operations++;
+	print_lists(NULL, b);
 /// delete
 
-	}
-	else if (fd == 1)
-	{
-		ft_putstr_fd(opts, fd);
-		free(opts);
-		g_count_operations_after++;
-	}
-//	return ((*operations));
+	if (fd == 1)
+		ft_putstr_fd("rrb\n", fd);
 }

@@ -6,262 +6,181 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/23 03:39:52 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/28 03:31:20 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	write_operations_on_stdout(char *line)
+int	search_bigger_number(t_lst **head, int checker, int bigger1)
 {
-	if (ft_strcmp(line, "sa\n") == 0)
-		sa(NULL, 1, NULL);
-	else if (ft_strcmp(line, "sb\n") == 0)
-		sb(NULL, 1, NULL);
-	else if (ft_strcmp(line, "ss\n") == 0)
-		ss(NULL, NULL, 1, NULL);
-	else if (ft_strcmp(line, "pa\n") == 0)
-		pa(NULL, NULL, 1, NULL);
-	else if (ft_strcmp(line, "pb\n") == 0)
-		pb(NULL, NULL, 1, NULL);
-	else if (ft_strcmp(line, "ra\n") == 0)
-		ra(NULL, 1, NULL);
-	else if (ft_strcmp(line, "rb\n") == 0)
-		rb(NULL, 1, NULL);
-	else if (ft_strcmp(line, "rr\n") == 0)
-		rr(NULL, NULL, 1, NULL);
-	else if (ft_strcmp(line, "rra\n") == 0)
-		rra(NULL, 1, NULL);
-	else if (ft_strcmp(line, "rrb\n") == 0)
-		rrb(NULL, 1, NULL);
-	else if (ft_strcmp(line, "rrr\n") == 0)
-		rrr(NULL, NULL, 1, NULL);
+	t_lst	*tmp;
+	int		bigger_index;
+	int		i;
+
+	bigger_index = 0;
+	i = 1;
+	tmp = (*head);
+	if (!(*head))
+		return (-1);
+	while (tmp != NULL)
+	{
+		if (checker == 0 && (*head)->nb == bigger1)
+			(*head) = (*head)->next;
+		if (tmp->next && (*head)->nb < tmp->next->nb)
+		{
+			if (checker == 0 && tmp->next->nb != bigger1)
+			{
+				(*head) = tmp->next;
+				bigger_index = i;
+			}
+			else if (checker == -1)
+			{
+				(*head) = tmp->next;
+				bigger_index = i;
+			}
+		}
+		tmp = tmp->next;
+		i++;
+	}
+	return (bigger_index);
 }
 
-void	operations_corrector(t_list **operations)
+void	before_check_next_2_numbers(t_lst **a, t_lst **b)
 {
-	t_list	*op_tmp;
-	t_list	*last;
-
-	op_tmp = (*operations);
-	last = ft_lstlast((*operations));
-	while (op_tmp)
+	if ((*a) && ((*a)->next && (*a)->nb > (*a)->next->nb) &&
+		((*b)->next && (*b)->nb < (*b)->next->nb))
+		ss(a, b, 1);
+	else if ((*a)->nb > (*a)->next->nb)
+		sa(a, 1);
+	if ((*b) && lst_is_sort((*b), -1) == -1)
 	{
-	//	printf("op = %s", op_tmp->content);
-		if (op_tmp->next)
-		{
-		/*	if (ft_strcmp(op_tmp->content, "sa\n") == 0)
-			{
-				if (ft_strcmp(op_tmp->next->content, "sa\n") == 0)
-					op_tmp = op_tmp->next;
-				else if (ft_strcmp(op_tmp->next->content, "sb\n") == 0)
-					ss(NULL, NULL, 1, NULL);
-				else
-					write_operations_on_stdout(op_tmp->content);
-		//		printf("----\n");
-			}
-			else if (ft_strcmp(op_tmp->content, "sb\n") == 0)
-			{
-				if (ft_strcmp(op_tmp->next->content, "sb\n") == 0)
-					op_tmp = op_tmp->next;
-				else if (ft_strcmp(op_tmp->next->content, "sa\n") == 0)
-					ss(NULL, NULL, 1, NULL);
-				else
-					write_operations_on_stdout(op_tmp->content);
-		//		printf("----\n");
-			}
-			else if (ft_strcmp(op_tmp->content, "pa\n") == 0)
-			{
-				if (ft_strcmp(op_tmp->next->content, "pb\n") == 0)
-					op_tmp = op_tmp->next;
-				else
-					write_operations_on_stdout(op_tmp->content);
-		//		printf("----\n");
-			}
-			else if (ft_strcmp(op_tmp->content, "pb\n") == 0)
-			{
-				if (ft_strcmp(op_tmp->next->content, "pa\n") == 0)
-					op_tmp = op_tmp->next;
-				else
-					write_operations_on_stdout(op_tmp->content);
-		//		printf("----\n");
-			}
-			else if (ft_strcmp(op_tmp->content, "ra\n") == 0)
-			{
-				if (ft_strcmp(op_tmp->next->content, "rb\n") == 0)
-					rr(NULL, NULL, 1, NULL);
-				else if (op_tmp->next->next && op_tmp->next->next->content &&
-					ft_strcmp(op_tmp->next->content, "rr\n") == 0)
-				{
-					while (ft_strcmp(op_tmp->next->content, "rr\n") == 0)
-					{
-						rr(NULL, NULL, 1, NULL);
-						op_tmp = op_tmp->next;
-					}
-					if (ft_strcmp(op_tmp->next->next->content, "rb\n") == 0)
-						rr(NULL, NULL, 1, NULL);
-				}
-				else if (ft_strcmp(op_tmp->next->content, "rra\n") == 0)
-				{
-		//			printf("op_tmp->next->next->content = %s\n", op_tmp->next->next->content);
-					op_tmp = op_tmp->next;
-				}
-				else
-					write_operations_on_stdout(op_tmp->content);
-		//		printf("----\n");
-			}
-			else if (ft_strcmp(op_tmp->content, "rb\n") == 0)
-			{
-				if (ft_strcmp(op_tmp->next->content, "ra\n") == 0)
-					rr(NULL, NULL, 1, NULL);
-				else if (op_tmp->next->next && op_tmp->next->next->content &&
-					ft_strcmp(op_tmp->next->content, "rr\n") == 0)
-				{
-					while (ft_strcmp(op_tmp->next->content, "rr\n") == 0)
-					{
-						rr(NULL, NULL, 1, NULL);
-						op_tmp = op_tmp->next;
-					}
-					if (ft_strcmp(op_tmp->next->next->content, "ra\n") == 0)
-						rr(NULL, NULL, 1, NULL);
-				}
-				else if (ft_strcmp(op_tmp->next->content, "rrb\n") == 0)
-					op_tmp = op_tmp->next;
-				else
-					write_operations_on_stdout(op_tmp->content);
-		//		printf("----\n");
-			}
-			else if (ft_strcmp(op_tmp->content, "rr\n") == 0)
-			{
-				if (ft_strcmp(op_tmp->next->content, "rrr\n") == 0)
-					op_tmp = op_tmp->next;
-				else if ((ft_strcmp(op_tmp->next->content, "rra\n") == 0 &&
-					ft_strcmp(op_tmp->next->next->content, "rrb\n") == 0) ||
-					(ft_strcmp(op_tmp->next->content, "rrb\n") == 0 &&
-					ft_strcmp(op_tmp->next->next->content, "rra\n") == 0))
-					op_tmp = op_tmp->next;
-				else
-					write_operations_on_stdout(op_tmp->content);
-		//		printf("----\n");
-			}
-			else if (ft_strcmp(op_tmp->content, "rra\n") == 0)
-			{
-				if (ft_strcmp(op_tmp->next->content, "rrb\n") == 0)
-					rrr(NULL, NULL, 1, NULL);
-				else if (op_tmp->next->next->content &&
-					ft_strcmp(op_tmp->next->content, "rrr\n") == 0)
-				{
-					while (ft_strcmp(op_tmp->next->content, "rrr\n") == 0)
-					{
-						rrr(NULL, NULL, 1, NULL);
-						op_tmp = op_tmp->next;
-					}
-					if (ft_strcmp(op_tmp->next->next->content, "rrb\n") == 0)
-						rr(NULL, NULL, 1, NULL);
-				}
-				else if (ft_strcmp(op_tmp->next->content, "rb\n") == 0)
-					op_tmp = op_tmp->next;
-				else
-					write_operations_on_stdout(op_tmp->content);
-		//		printf("----\n");
-			}
-			else if (ft_strcmp(op_tmp->content, "rrb\n") == 0)
-			{
-				if (ft_strcmp(op_tmp->next->content, "rra\n") == 0)
-					rrr(NULL, NULL, 1, NULL);
-				else if (op_tmp->next->next->content &&
-					ft_strcmp(op_tmp->next->content, "rrr\n") == 0)
-				{
-					while (ft_strcmp(op_tmp->next->content, "rrr\n") == 0)
-					{
-						rrr(NULL, NULL, 1, NULL);
-						op_tmp = op_tmp->next;
-					}
-					if (ft_strcmp(op_tmp->next->next->content, "rra\n") == 0)
-						rr(NULL, NULL, 1, NULL);
-				}
-				else if (ft_strcmp(op_tmp->next->content, "ra\n") == 0)
-					op_tmp = op_tmp->next;
-				else
-					write_operations_on_stdout(op_tmp->content);
-		//		printf("----\n");
-			}
-			else if (ft_strcmp(op_tmp->content, "rrr\n") == 0)
-			{
-				if (ft_strcmp(op_tmp->next->content, "rr\n") == 0)
-					op_tmp = op_tmp->next;
-				else if ((ft_strcmp(op_tmp->next->content, "ra\n") == 0 &&
-					ft_strcmp(op_tmp->next->next->content, "rb\n") == 0) ||
-					(ft_strcmp(op_tmp->next->content, "rb\n") == 0 &&
-					ft_strcmp(op_tmp->next->next->content, "ra\n") == 0))
-					op_tmp = op_tmp->next;
-				else*/
-					write_operations_on_stdout(op_tmp->content);
-		//		printf("----\n");
-		//	}
-		}
-		op_tmp = op_tmp->next;
+		if (!(*b)->next->next)
+			sb(b, 1);
 	}
-	write_operations_on_stdout(last->content);
+	else if ((*b) && lst_is_sort((*b), -1) == 0)
+	{
+		while ((*b))
+			pa(a, b, 1);
+	}
+
+//		printf("head of b = %d\n", (*b)->nb);
+//		printf("length of b = %d\n", lstlen(b));
+}
+
+void	rotate_b(t_lst **b, int i1, int i2)
+{
+	if (i1 < ((lstlen(b) - 1) - i2))
+		rb(b, 1);
+	else if (i1 >= ((lstlen(b) - 1) - i2))
+		rrb(b, 1);
+}
+
+int	 bigger_nb_2(t_lst **b, int bigger1, int *bigger2)
+{
+	t_lst	*head;
+	int		i2;
+
+	i2 = 0;
+	head = (*b);
+	i2 = search_bigger_number(&head, 0, bigger1);
+	*bigger2 = head->nb;
+	return (i2);
+}
+
+int	bigger_nb(t_lst **b, int *bigger1)
+{
+	t_lst	*head;
+	int		i1;
+
+	i1 = 0;
+	head = (*b);
+	i1 = search_bigger_number(&head, -1, -1);
+	*bigger1 = head->nb;
+	return (i1);
+}
+
+void	from_b_to_a(t_lst **a, t_lst **b)
+{
+//	t_lst	*head;
+	int		bigger1;
+	int		bigger2;
+	int		i1;
+	int		i2;
+	int		track_of_pa;
+
+	while ((*b))
+	{
+		track_of_pa = 0;
+		i1 = bigger_nb(b, &bigger1);
+		i2 = bigger_nb_2(b, bigger1, &bigger2);
+//// test
+/*		printf("\n\n------\n");
+		printf("head of a = %d\n", (*a)->nb);
+		printf("length of a = %d\n\n", lstlen(a));
+		if ((*b)->next)
+		{
+			printf("bigger1 number = %d\n", bigger1);
+			printf("i1 = %d\n\n", i1);
+		}
+		if ((*b)->next)
+		{
+			printf("bigger2 number = %d\n", bigger2);
+			printf("i2 = %d\n", i2);
+		}
+		printf("------\n\n");
+//// test*/
+		while (track_of_pa < 2)
+		{
+			if (((*b)->nb != bigger1 && (*b)->nb != bigger2) &&
+				((*b)->next && ((*b)->next->nb == bigger1 ||
+				(*b)->next->nb == bigger2)) && ((i1 <= 2 ||
+				i1 > lstlen(b) / 2) && (i2 <= 2 || i2 > lstlen(b) / 2)))
+			{
+				sb(b, 1);
+			//	printf("head of b = %d\n", (*b)->nb);
+			//	printf("b->next = %d\n", (*b)->next->nb);
+			}
+		///	printf("bigger1 number = %d\n", bigger1);
+		//	printf("bigger2 number = %d\n", bigger2);
+			while ((bigger1 && bigger2 && (*a)) &&
+				((*b)->nb != bigger1 && (*b)->nb != bigger2))
+				rotate_b(b, i1, i2);
+			if ((*b)->nb == bigger1 || (*b)->nb == bigger2)
+			{
+				track_of_pa++;
+				if ((*b)->nb == bigger1)
+					i1 = i2;
+				else if ((*b)->nb == bigger2)
+					i2 = i1;
+				pa(a, b, 1);
+			}
+		//	printf("track_of_pa = %d\n", track_of_pa);
+		}
+		before_check_next_2_numbers(a, b);
+	}
 }
 
 void	pick_algo(t_lst **a, t_lst **b, int ac)
 {
-	t_list *operations;
-	t_list	**operations_tmp;
-
-	operations = NULL;
-
-	operations_tmp = &operations;
+	if (!(*a))
+		return ;
 	if (ac == 2 || ac == 3)
-		sort_max_3(a, &operations);
+		sort_max_3(a);
 	else if (ac <= 20)
-		sort_max_12(a, b, &operations);
+		sort_max_12(a, b);
 	else
-		sort_max_100(a, b, &operations);
-//	else
-//		sort_max_500(a, b);
-	//	sort_max_500(a, b);
-
-
-	operations_corrector(&operations);
-/// test operations
-//	printf("============\n");
-/*	while ((*operations_tmp))
 	{
-		printf("%s", (*operations_tmp)->content);
-		(*operations_tmp) = (*operations_tmp)->next;
+		if (ac <= 100)
+			sort_max_100(a, b);
+		else
+			sort_max_500(a, b);
+		if (((*a)->next && (*a)->nb > (*a)->next->nb) && ((*b)->next && (*b)->nb < (*b)->next->nb))
+			ss(a, b, 1);
+		else if ((*a)->next && (*a)->nb > (*a)->next->nb)
+			sa(a, 1);
+		from_b_to_a(a, b);
 	}
-/// test operations
-*/
-	ft_lstclear(&operations, &free_list);
-
-///// test
-/*	printf("------------ Sorted list a ------------\n");
-
-	printf("len a = %d\n", lstlen(a));
-	if ((*a))
-		printf("a\n-\n");
-	while (*a)
-	{
-		printf("%d\n", (int)(*a)->nb);
-		(*a) = (*a)->next;
-	}
-
-	printf("------------ Sorted list b ------------\n");
-
-	printf("len b = %d\n", lstlen(b));
-	if (!(*b))
-		printf("List b is empty\n");
-	else
-		printf("b\n-\n");
-	while (*b)
-	{
-		printf("%d\n", (int)(*b)->nb);
-		(*b) = (*b)->next;
-	}*/
-
-///// test
 }
 
 int	main(int ac, char **av)
@@ -269,7 +188,6 @@ int	main(int ac, char **av)
 	t_lst	*a;
 	t_lst	*b;
 
-	g_count_operations = 0;
 	a = NULL;
 	b = NULL;
 	if (handle_wrong_ac(ac) == -1)
@@ -285,11 +203,10 @@ int	main(int ac, char **av)
 		{
 			a = create_lst(&av[1]);
 			pick_algo(&a, &b, ac - 1);
+			free_lst(&a);
+		//	free_lst(&b);
 		}
-		free_lst(&a);
-		free_lst(&b);
 	}
-//	printf("NUMBER OF REGISTERS BEFORE = %d\n", g_count_operations);
-//	printf("NUMBER OF REGISTERS AFTER = %d\n", g_count_operations_after);
+//	printf("NUMBER OF REGISTERS = %d\n", g_count_operations);
 	return (0);
 }

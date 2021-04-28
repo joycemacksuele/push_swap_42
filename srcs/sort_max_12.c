@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/15 01:31:13 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/25 03:50:38 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,11 @@ int	search_lower_number(t_lst **a_tmp, int checker, int lower1)
 	{
 		checker = 0;
 		lower1 = 0;
-	//	if (checker == 0 && (*a_tmp)->nb == lower1)
-	//		(*a_tmp) = (*a_tmp)->next;
 
-	//	printf("tmp->next>nb = %d\n", tmp->next->nb);
-	//	printf("(*a_tmp)->nb = %d\n", (*a_tmp)->nb);
 		if (tmp->next && (*a_tmp)->nb > tmp->next->nb)
 		{
-		//	if (checker == 0 && tmp->next->nb != lower1)
-		//	{
 			(*a_tmp) = tmp->next;
 			lower_index = i;
-		//	}
 		}
 		tmp = tmp->next;
 		i++;
@@ -60,7 +53,7 @@ int	search_lower_number(t_lst **a_tmp, int checker, int lower1)
  *    everything back to stack a using pa.
  */
 
-void	sort_max_12(t_lst **a, t_lst **b, t_list **operations)
+void	sort_max_12(t_lst **a, t_lst **b)
 {
 	t_lst	*a_tmp;
 	int		len;
@@ -74,16 +67,16 @@ void	sort_max_12(t_lst **a, t_lst **b, t_list **operations)
 		while ((*a)->nb != a_tmp->nb)
 		{
 			if (i <= len / 2)
-				ra(a, 2, operations);
+				ra(a, 1);
 			else if (i > len / 2)
-				rra(a, 2, operations);
+				rra(a, 1);
 		}
 		if (lst_is_sort((*a), 0) == -1)
-			pb(a, b, 2, operations);
+			pb(a, b, 1);
 	}
-	sort_max_3(a, operations);
+	sort_max_3(a);
 	while ((*b))
-		pa(a, b, 2, operations);
+		pa(a, b, 1);
 }
 
 /*
@@ -92,23 +85,23 @@ void	sort_max_12(t_lst **a, t_lst **b, t_list **operations)
  * which operator to use, while the list of arguents is not sorted.
  */
 
-void	sort_max_3(t_lst **a, t_list **operations)
+void	sort_max_3(t_lst **a)
 {
 	if (lstlen(a) == 2)
-		sa(a, 2, operations);
+		sa(a, 1);
 	else if (lstlen(a) == 3)
 	{
 		while (lst_is_sort((*a), 0) == -1)
 		{
 			if ((*a)->nb > (*a)->next->nb &&
 			(*a)->nb > (*a)->next->next->nb)
-				ra(a, 2, operations);
+				ra(a, 1);
 			else if ((*a)->nb < (*a)->next->nb &&
 			(*a)->next->nb > (*a)->next->next->nb)
-				rra(a, 2, operations);
+				rra(a, 1);
 			if ((*a)->nb > (*a)->next->nb &&
 			(*a)->nb < (*a)->next->next->nb)
-				sa(a, 2, operations);
+				sa(a, 1);
 		}
 	}
 }

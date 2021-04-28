@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 02:13:20 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/23 01:51:22 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/27 00:33:28 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,122 +56,64 @@ void	print_lists(t_lst **a, t_lst **b)
  * Do nothing if there is only one or no elements).
  */
 
-void	sa(t_lst **a, int fd, t_list **operations)
+void	sa(t_lst **a, int fd)
 {
 	int		tmp;
-	char	*opts;
 
-	opts = ft_strdup("sa\n");
-	if (fd == 0 || fd == 2)
-	{
-		if (fd == 2)
-		{
-			ft_lstadd_back(operations, ft_lstnew(opts));
+
 /// delete
 		//	printf("\n--->>> %s", "sa\n");
 			print_lists(a, 0);
-			g_count_operations++;
 /// delete
-		}
-
-		//	*operations = create_list_2(opts);
-
-//		printf("OPERATIONS->CONTENT = %s", (*operations)->content);
-	//	free(opts);
-		if ((*a))
-		{
-			tmp = (*a)->nb;
-			(*a)->nb = (*a)->next->nb;
-			(*a)->next->nb = tmp;
-		}
-	}
-	else if (fd == 1)
+	if ((*a))
 	{
-		ft_putstr_fd(opts, fd);
-		free(opts);
-		g_count_operations_after++;
+		tmp = (*a)->nb;
+		(*a)->nb = (*a)->next->nb;
+		(*a)->next->nb = tmp;
 	}
-//	return ((*operations));
+	if (fd == 1)
+		ft_putstr_fd("sa\n", fd);
 }
 
-void	sb(t_lst **b, int fd, t_list **operations)
+void	sb(t_lst **b, int fd)
 {
 	int		tmp;
-	char	*opts;
 
-	opts = ft_strdup("sb\n");
-	if (fd == 0 || fd == 2)
-	{
-		if (fd == 2)
-		{
-			ft_lstadd_back(operations, ft_lstnew(opts));
 /// delete
 			//printf("\n--->>> %s", "sb\n");
-			print_lists(0, b);
-			g_count_operations++;
+		print_lists(0, b);
 /// delete
-		}
-		//	*operations = create_list_2(opts);
 
-	//	printf("OPERATIONS->CONTENT = %s", (*operations)->content);
-	//	free(opts);
-		if ((*b))
-		{
-			tmp = (*b)->nb;
-			(*b)->nb = (*b)->next->nb;
-			(*b)->next->nb = tmp;
-		}
-
-
-
-	}
-	else if (fd == 1)
+	if ((*b))
 	{
-		ft_putstr_fd(opts, fd);
-		free(opts);
-		g_count_operations_after++;
+		tmp = (*b)->nb;
+		(*b)->nb = (*b)->next->nb;
+		(*b)->next->nb = tmp;
 	}
-//	return ((*operations));
+	if (fd == 1)
+		ft_putstr_fd("sb\n", fd);
 }
 
 /*
  * ss: sa and sb at the same time.
  */
 
-void	ss(t_lst **a, t_lst **b, int fd, t_list **operations)
+void	ss(t_lst **a, t_lst **b, int fd)
 {
-	char	*opts;
 
-	opts = ft_strdup("ss\n");
-	if (fd == 0 || fd == 2)
+	if ((*a)->next && (*b)->next)
 	{
-		if (fd == 2)
-			ft_lstadd_back(operations, ft_lstnew(opts));
-		//	*operations = create_list_2(opts);
-
-	//	printf("OPERATIONS->CONTENT = %s", (*operations)->content);
-	//	free(opts);
-		if ((*a)->next && (*b)->next)
-		{
-			sa(a, 0, NULL);
-			sb(b, 0, NULL);
-		}
+		sa(a, 0);
+		sb(b, 0);
+	}
 
 /// delete
 		//printf("\n--->>> %s", "ss\n");
-		print_lists(a, b);
-		g_count_operations++;
+	print_lists(a, b);
 /// delete
 
-	}
-
-	else if (fd == 1)
-	{
+	if (fd == 1)
 		ft_putstr_fd("ss\n", fd);
-		free(opts);
-		g_count_operations_after++;
-	}
-//	return ((*operations));
 }
 
 /*
@@ -179,50 +121,33 @@ void	ss(t_lst **a, t_lst **b, int fd, t_list **operations)
  *  of b. Do nothing if the other stack is empty.
  */
 
-void	pb(t_lst **a, t_lst **b, int fd, t_list **operations)
+void	pb(t_lst **a, t_lst **b, int fd)
 {
 	t_lst	*tmp;
 	int		nb;
-	char	*opts;
 
-	opts = ft_strdup("pb\n");
 	tmp = NULL;
 	nb = 0;
-	if (fd == 0 || fd == 2)
-	{
-		if (fd == 2)
-			ft_lstadd_back(operations, ft_lstnew(opts));
-		//	*operations = create_list_2(opts);
-	//	printf("OPERATIONS->CONTENT = %s", (*operations)->content);
-	//	free(opts);
-		if (a && *a)
-		{
-			nb = (*a)->nb;
-			tmp = lstnew(nb);
-			lstadd_front(b, tmp);
-			if ((*a)->next)
-				(*a) = (*a)->next;
-			else
-				free_lst(a);
 
+	if (a && b)
+	{
+		nb = (*a)->nb;
+		tmp = lstnew(nb);
+		lstadd_front(b, tmp);
+		if ((*a)->next)
+			(*a) = (*a)->next;
+		else
+			free_lst(a);//free((*a));//
 	//	free(tmp);
-		//	(*a) = NULL;
-		}
 
 /// delete
 		//printf("\n--->>> %s", "pb\n");
 		print_lists(a, b);
-		g_count_operations++;
 /// delete
 
+		if (fd == 1)
+			ft_putstr_fd("pb\n", fd);
 	}
-	else if (fd == 1)
-	{
-		ft_putstr_fd(opts, fd);
-		free(opts);
-		g_count_operations_after++;
-	}
-//	return ((*operations));
 }
 
 /*
@@ -230,59 +155,30 @@ void	pb(t_lst **a, t_lst **b, int fd, t_list **operations)
  *  of a. Do nothing if the other stack is empty.
  */
 
-void	pa(t_lst **a, t_lst **b, int fd, t_list **operations)
+void	pa(t_lst **a, t_lst **b, int fd)
 {
 	t_lst	*tmp;
 	int		nb;
-	char	*opts;
 
-	opts = ft_strdup("pa\n");
 	tmp = NULL;
 	nb = 0;
-	if (fd == 0 || fd == 2)
+	if (a && b)
 	{
-		if (fd == 2)
-			ft_lstadd_back(operations, ft_lstnew(opts));
-		//	*operations = create_list_2(opts);
-
-	//	printf("OPERATIONS->CONTENT = %s", (*operations)->content);
-	//	free(opts);
-		if (b && *b)
-		{
-			nb = (*b)->nb;
-			tmp = lstnew(nb);
-			lstadd_front(a, tmp);
-			if ((*b)->next)
-				(*b) = (*b)->next;
-			else
-				free_lst(b);
-	/*	//test ------------------
-		while ((*a))
-		{
-			printf("a = %d\n", (*a)->nb);
-			(*a) = (*a)->next;
-		}
-		printf("\n\n");
-		while ((*b))
-		{
-			printf("b = %d\n", (*b)->nb);
+		nb = (*b)->nb;
+		tmp = lstnew(nb);
+		lstadd_front(a, tmp);
+		if ((*b)->next)
 			(*b) = (*b)->next;
-		}
-		//test ------------------*/
-		}
+		else
+			free_lst(b);//free((*b));//
+	//	free(tmp);
 
 /// delete
 		//printf("\n--->>> %s", "pa\n");
 		print_lists(a, b);
-		g_count_operations++;
 /// delete
 
+		if (fd == 1)
+			ft_putstr_fd("pa\n", fd);
 	}
-	else if (fd == 1)
-	{
-		ft_putstr_fd(opts, fd);
-		free(opts);
-		g_count_operations_after++;
-	}
-//	return ((*operations));
 }

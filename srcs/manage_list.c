@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 02:01:49 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/15 02:03:46 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/23 20:13:27 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,6 @@ void	free_list(void *operations)
 	free(operations);
 	operations = NULL;
 }
-/*void	free_list(t_list **operations)
-{
-	t_list	*tmp;
-
-	if (!(*operations))
-		return ;
-	while ((*operations))
-	{
-		tmp = *operations;
-	//	free(&(*a_or_b)->nb); ???? int nb was not allocated
-		*operations = (*operations)->next;
-		free(tmp);
-		tmp = NULL;
-	}
-}*/
-
 
 t_list	*create_list_2(char *line)
 {

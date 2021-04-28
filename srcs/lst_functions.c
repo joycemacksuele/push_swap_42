@@ -6,20 +6,11 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 02:01:49 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/13 03:45:41 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/25 04:28:42 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-/*void	lstdelone(t_lst *lst)
-{
-	if (!lst)
-		return ;
-//	free(&lst->nb); int nb was ot allocated
-	free(lst);
-	lst = NULL;
-}*/
 
 void	lstclear(t_lst **lst, void (*del)(void *))
 {
@@ -30,14 +21,13 @@ void	lstclear(t_lst **lst, void (*del)(void *))
 	while ((*lst))
 	{
 		tmp = *lst;
-	//	(*del)((void*)(*lst)->nb);
 		*lst = (*lst)->next;
 		free(tmp);
 		tmp = NULL;
 	}
 }
 
-t_lst	*lst_before_last(t_lst *a_or_b)
+/*t_lst	*lst_before_last(t_lst *a_or_b)
 {
 	t_lst	*last;
 
@@ -50,7 +40,7 @@ t_lst	*lst_before_last(t_lst *a_or_b)
 		last = last->next;
 //	}
 	return (last);
-}
+}*/
 
 t_lst	*lstlast(t_lst *a_or_b)
 {
