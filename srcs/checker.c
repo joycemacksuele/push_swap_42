@@ -6,11 +6,16 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/25 03:48:38 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/30 03:30:54 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+/*
+ * Runnig the operations of the stacks, but without outputing the operation's
+ * name.
+ */
 
 void	run_operations_on_stacks(char *line, t_lst **a, t_lst **b)
 {
@@ -37,11 +42,16 @@ void	run_operations_on_stacks(char *line, t_lst **a, t_lst **b)
 	else if (ft_strcmp(line, "rrr") == 0)
 		rrr(a, b, 0);
 }
+
 /*
  * If after executing the instructions, stack a is actually sorted AND b is
  * empty, then checker must display "OK" followed by a ’\n’ on the standard
  * output. In every other case, checker must display "KO" followed by a ’\n’
  * on the standard output.
+ *
+ * Here the operations read by get_next_line into the array is now split by
+ * it's apaces, so now each operations is in one "line/index" of an array of
+ * arrays (char **lines).
  */
 
 void	create_lists(char *opt, char **av)
@@ -53,7 +63,6 @@ void	create_lists(char *opt, char **av)
 	a = NULL;
 	b = NULL;
 	lines = ft_split(opt, ' ');
-
 	if (is_sort(av, -1) == -1)
 		a = create_lst(&av[1]);
 	while (*lines != NULL)
@@ -68,7 +77,6 @@ void	create_lists(char *opt, char **av)
 	while (a)
 		a = a->next;
 	free_lst(&a);
-	free_lst(&b);
 }
 
 int	check_operations(char *line)
@@ -98,6 +106,12 @@ int	check_operations(char *line)
 	else
 		return (-1);
 }
+
+/*
+ * It reads the operations input by the user42er on the STDIN, using the
+ * get_next_line function from the libft and saves it to an array, each
+ * operations then followed by a space (not a new line).
+ */
 
 int	read_operations(char **av)
 {

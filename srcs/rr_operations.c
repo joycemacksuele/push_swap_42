@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 02:13:20 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/27 00:42:20 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/30 03:42:25 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,7 @@ void	rr(t_lst **a, t_lst **b, int fd)
 		ra(a, 0);
 		rb(b, 0);
 	}
-
-/// delete
-	//	printf("\n--->>> %s", "rr\n");
-	print_lists(a, b);
-/// delete
-
+	//print_lists(a, b);
 	if (fd == 1)
 		ft_putstr_fd("rr\n", fd);
 }
@@ -40,50 +35,40 @@ void	rr(t_lst **a, t_lst **b, int fd)
  * the list a, create a new list with tmp on it (the number on head of a), and
  * lastly, link this new list to the back of the list a and free the list just
  * created.
+ *
+ * It basically puts the head of the list a or b to tmp, then goes sets the
+ * current list's head to it's own next link, and lastly add to the end of it,
+ * the tmp node just created.
  */
 
 void	ra(t_lst **a, int fd)
 {
-	int		tmp;
-	t_lst	*new;
+	t_lst	*tmp;
 
 	if ((*a))
 	{
-		tmp = (*a)->nb;
+		tmp = (*a);
 		(*a) = (*a)->next;
-		new = lstnew(tmp);
-		lstadd_back(a, new);
-//		free(new);
+		tmp->next = NULL;
+		lstadd_back(a, tmp);
 	}
-
-/// delete
-		//printf("\n--->>> %s", "ra\n");
-	print_lists(a, NULL);
-/// delete
-
+	//print_lists(a, NULL);
 	if (fd == 1)
 		ft_putstr_fd("ra\n", fd);
 }
 
 void	rb(t_lst **b, int fd)
 {
-	int		tmp;
-	t_lst	*new;
+	t_lst	*tmp;
 
 	if ((*b))
 	{
-		tmp = (*b)->nb;
+		tmp = (*b);
 		(*b) = (*b)->next;
-		new = lstnew(tmp);
-		lstadd_back(b, new);
-	//	free_lst(&new);
+		tmp->next = NULL;
+		lstadd_back(b, tmp);
 	}
-
-/// delete
-		//printf("\n--->>> %s", "rb\n");
-	print_lists(NULL, b);
-/// delete
-
+	//print_lists(NULL, b);
 	if (fd == 1)
 		ft_putstr_fd("rb\n", fd);
 }

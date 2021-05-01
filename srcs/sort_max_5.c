@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort_max_12.c                                      :+:      :+:    :+:   */
+/*   sort_max_5.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/25 03:50:38 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/05/01 03:29:15 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	search_lower_number(t_lst **a_tmp, int checker, int lower1)
+static int	search_lower_number(t_lst **a_tmp, int checker, int lower1)
 {
 	t_lst	*tmp;
 	int		lower_index;
@@ -27,7 +27,6 @@ int	search_lower_number(t_lst **a_tmp, int checker, int lower1)
 	{
 		checker = 0;
 		lower1 = 0;
-
 		if (tmp->next && (*a_tmp)->nb > tmp->next->nb)
 		{
 			(*a_tmp) = tmp->next;
@@ -53,7 +52,7 @@ int	search_lower_number(t_lst **a_tmp, int checker, int lower1)
  *    everything back to stack a using pa.
  */
 
-void	sort_max_12(t_lst **a, t_lst **b)
+void	sort_max_5(t_lst **a, t_lst **b)
 {
 	t_lst	*a_tmp;
 	int		len;

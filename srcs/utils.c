@@ -6,11 +6,53 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:56:28 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/27 02:29:38 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/04/30 03:57:08 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+static int	bigger_nbr_and_index(t_lst **head, t_lst *tmp, int index, int i)
+{
+	(*head) = tmp->next;
+	index = i;
+	return (index);
+}
+
+/*
+ * It searches for the biggest number and it's index from a given list.
+ */
+
+int	search_bigger_number(t_lst **head, int checker, int bigger1)
+{
+	t_lst	*tmp;
+	int		bigger_index;
+	int		i;
+
+	tmp = (*head);
+	bigger_index = 0;
+	i = 1;
+	while (tmp != NULL)
+	{
+		if (checker == 0 && (*head)->nb == bigger1)
+			(*head) = (*head)->next;
+		if (tmp->next && (*head)->nb < tmp->next->nb)
+		{
+			if (checker == 0 && tmp->next->nb != bigger1)
+				bigger_index = bigger_nbr_and_index(head, tmp, bigger_index, i);
+			else if (checker == -1)
+				bigger_index = bigger_nbr_and_index(head, tmp, bigger_index, i);
+		}
+		tmp = tmp->next;
+		i++;
+	}
+	return (bigger_index);
+}
+
+/*
+ * Used by the algorithms for when the input numbers are from 100 to 500, so
+ * later this sorted array of arrays can be used to find its middle number.
+ */
 
 char	**sort_array(char **a_or_b)
 {
@@ -40,6 +82,11 @@ char	**sort_array(char **a_or_b)
 	return (a_or_b);
 }
 
+/*
+ * Used by the algorithms for when the input numbers are from 100 to 500, so
+ * later this array of arrays can be sorted in orther to find its middle number.
+ */
+
 char	**save_stack_to_array(t_lst **a_or_b, int len)
 {
 	char	**saved;
@@ -62,7 +109,6 @@ char	**save_stack_to_array(t_lst **a_or_b, int len)
 			tmp = tmp->next;
 		}
 		saved[i] = NULL;
-		//free(tmp);
 	}
 	else
 		return (NULL);
@@ -74,11 +120,6 @@ char	**save_stack_to_array(t_lst **a_or_b, int len)
  * Obs.: atoi can be used because if has already passed the error functions,
  * so if itgot here, it means that the arguments are indeed not duplicated
  * signed intergers.
- *
- * @args:
- *		char **av: the arguments of the program call.
- * @return:
- *		int: 0 is it's sorted and -1 if it's not sorted.
  */
 
 int	is_sort(char **av, int error)

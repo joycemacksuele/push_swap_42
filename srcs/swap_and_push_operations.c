@@ -6,11 +6,15 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 02:13:20 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/27 00:33:28 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/05/01 03:38:17 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+/*
+ * Funtion only for test purposes.
+ */
 
 void	print_lists(t_lst **a, t_lst **b)
 {
@@ -18,23 +22,17 @@ void	print_lists(t_lst **a, t_lst **b)
 	t_lst *btmp;
 	int		i;
 
-	if (a)
-		tmp = (*a);
-	else
-		tmp = NULL;
-	if (b)
-		btmp = (*b);
-	else
-		btmp = NULL;
+	tmp = (*a);
+	btmp = (*b);
 	i = 1;
-/*	while (tmp)
+	while (tmp)
 	{
-	//	while (i-- >= 0)
-	//	{
+		while (i-- >= 0)
+		{
 			printf("a = %d		", tmp->nb);
 			if (!btmp)
 				printf("\n");
-	//	}
+		}
 		if (btmp)
 		{
 			printf("		b = %d\n", btmp->nb);
@@ -47,8 +45,7 @@ void	print_lists(t_lst **a, t_lst **b)
 		printf("					b = %d\n", btmp->nb);
 		btmp = btmp->next;
 	}
-
-	printf("\n---------------------------------------------------\n");*/
+	printf("\n---------------------------------------------------\n");
 }
 
 /*
@@ -60,11 +57,7 @@ void	sa(t_lst **a, int fd)
 {
 	int		tmp;
 
-
-/// delete
-		//	printf("\n--->>> %s", "sa\n");
-			print_lists(a, 0);
-/// delete
+	//print_lists(a, 0);
 	if ((*a))
 	{
 		tmp = (*a)->nb;
@@ -79,11 +72,7 @@ void	sb(t_lst **b, int fd)
 {
 	int		tmp;
 
-/// delete
-			//printf("\n--->>> %s", "sb\n");
-		print_lists(0, b);
-/// delete
-
+	//print_lists(0, b);
 	if ((*b))
 	{
 		tmp = (*b)->nb;
@@ -106,12 +95,7 @@ void	ss(t_lst **a, t_lst **b, int fd)
 		sa(a, 0);
 		sb(b, 0);
 	}
-
-/// delete
-		//printf("\n--->>> %s", "ss\n");
-	print_lists(a, b);
-/// delete
-
+	//print_lists(a, b);
 	if (fd == 1)
 		ft_putstr_fd("ss\n", fd);
 }
@@ -119,32 +103,28 @@ void	ss(t_lst **a, t_lst **b, int fd)
 /*
  * pb: push a -> take the first element at the top of a and put it at the top
  *  of b. Do nothing if the other stack is empty.
+ *
+ * It basically saves the next link of the wanted stack, then saves the head of
+ * this stack to tmp and add it to the front of the other stack. Lastly, it
+ * sets the head of the wanted stack to that next link that was first saved.
  */
 
 void	pb(t_lst **a, t_lst **b, int fd)
 {
 	t_lst	*tmp;
-	int		nb;
+	t_lst	*save_head_a;
 
 	tmp = NULL;
-	nb = 0;
-
+	save_head_a = NULL;
 	if (a && b)
 	{
-		nb = (*a)->nb;
-		tmp = lstnew(nb);
-		lstadd_front(b, tmp);
 		if ((*a)->next)
-			(*a) = (*a)->next;
-		else
-			free_lst(a);//free((*a));//
-	//	free(tmp);
-
-/// delete
-		//printf("\n--->>> %s", "pb\n");
-		print_lists(a, b);
-/// delete
-
+			save_head_a = (*a)->next;
+		tmp = (*a);
+		tmp->next = NULL;
+		lstadd_front(b, tmp);
+		(*a) = save_head_a;
+		//print_lists(a, b);
 		if (fd == 1)
 			ft_putstr_fd("pb\n", fd);
 	}
@@ -158,26 +138,19 @@ void	pb(t_lst **a, t_lst **b, int fd)
 void	pa(t_lst **a, t_lst **b, int fd)
 {
 	t_lst	*tmp;
-	int		nb;
+	t_lst	*save_head_b;
 
 	tmp = NULL;
-	nb = 0;
+	save_head_b = NULL;
 	if (a && b)
 	{
-		nb = (*b)->nb;
-		tmp = lstnew(nb);
-		lstadd_front(a, tmp);
 		if ((*b)->next)
-			(*b) = (*b)->next;
-		else
-			free_lst(b);//free((*b));//
-	//	free(tmp);
-
-/// delete
-		//printf("\n--->>> %s", "pa\n");
-		print_lists(a, b);
-/// delete
-
+			save_head_b = (*b)->next;
+		tmp = (*b);
+		tmp->next = NULL;
+		lstadd_front(a, tmp);
+		(*b) = save_head_b;
+		//print_lists(a, b);
 		if (fd == 1)
 			ft_putstr_fd("pa\n", fd);
 	}
