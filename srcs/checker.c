@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/05/01 00:06:18 by whoami           ###   ########.fr       */
+/*   Updated: 2021/05/02 01:45:51 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,18 +113,18 @@ int	check_operations(char *line)
  * operations then followed by a space (not a new line).
  */
 
-int	read_operations(char **av)
+int	read_operations(char **av, int ret_gnl)
 {
 	char	*line;
 	char	*opt;
-	int		ret_gnl;
 
-	//line = NULL;
+	line = NULL;
 	opt = ft_strdup("");
-	ret_gnl = 1;
 	while (ret_gnl > 0)
 	{
 		ret_gnl = get_next_line(0, &line);
+		if (ret_gnl != 1)
+			break ;
 		if (check_operations(line) == -1)
 		{
 			free(opt);
@@ -139,19 +139,20 @@ int	read_operations(char **av)
 	if (ret_gnl == 0)
 		create_lists(opt, av);
 	ft_strdel(&opt);
-	//if (ret_gnl == -1)
-	//	return (-1);
 	return (0);
 }
 
 int	main(int ac, char **av)
 {
+	int		ret_gnl;
+
+	ret_gnl = 1;
 	if (ac <= 1)
 		return (-1);
 	else if (ac >= 2)
 	{
 		if (not_int(av) == -1 || find_doubles(av) == -1
-			|| read_operations(av) == -1)
+			|| read_operations(av, ret_gnl) == -1)
 		{
 			ft_putstr_fd("Error\n", 2);
 			return (-1);

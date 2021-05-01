@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/05/01 00:07:11 by whoami           ###   ########.fr       */
+/*   Updated: 2021/05/02 00:38:16 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	from_b_to_a(t_lst **a, t_lst **b, t_dumb track_of)
 
 	while ((*b))
 	{
-		track_of.oprt = 0;
+		track_of.pa_or_pb = 0;
 		i1 = bigger_nb(b, &bigger1);
 		i2 = bigger_nb_2(b, bigger1, &bigger2);
-		while (track_of.oprt < 2 && bigger1 && bigger2)
+		while (track_of.pa_or_pb < 2 && bigger1 && bigger2)
 		{
 			if (if1(b, bigger1, bigger2) == 1 && if2(b, i1, i2) == 1)
 				sb(b, 1);
@@ -43,7 +43,7 @@ void	from_b_to_a(t_lst **a, t_lst **b, t_dumb track_of)
 			{
 				i1 = nbr_equal_bigger1(b, bigger1, i1, i2);
 				i2 = nbr_equal_bigger2(b, bigger2, i1, i2);
-				track_of.oprt = do_pa(a, b, track_of.oprt);
+				track_of.pa_or_pb = do_pa(a, b, track_of.pa_or_pb);
 			}
 		}
 		before_check_next_2_numbers(a, b);
@@ -66,7 +66,7 @@ void	pick_algo(t_lst **a, t_lst **b, int ac)
 {
 	t_dumb	track_of;
 
-	track_of.oprt = 0;
+	track_of.pa_or_pb = 0;
 	if (!(*a))
 		return ;
 	if (ac == 2 || ac == 3)

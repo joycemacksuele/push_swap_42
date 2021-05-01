@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/05/01 00:16:18 by whoami           ###   ########.fr       */
+/*   Updated: 2021/05/02 00:32:09 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	sort_max_5(t_lst **a, t_lst **b)
 
 	while (/*lst_is_sort((*a), 0) == -1 && */(len = lstlen(a)) > 3)
 	{
-		if (lst_is_sort((*a), 0) == 0);
+		if (lst_is_sort((*a), 0) == 0)
 			break ;
 		a_tmp = (*a);
 		i = 0;

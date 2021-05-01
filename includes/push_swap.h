@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 02:13:33 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/05/01 00:24:39 by whoami           ###   ########.fr       */
+/*   Updated: 2021/05/02 01:32:31 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ typedef struct s_lst
 
 typedef struct s_dumb
 {
-	int		oprt;
+	int		pa_or_pb;
+	int		ra_or_rra;
 	char	**chunk;
 	char	*pnbs[2];
 }			t_dumb;
@@ -109,7 +110,7 @@ void			rrr(t_lst **a, t_lst **b, int fd);
 /*
  * checker
  */
-int				read_operations(char **av);
+int				read_operations(char **av, int ret_gnl);
 int				check_operations(char *line);
 void			create_lists(char *opt, char **av);
 void			run_operations_on_stacks(char *line, t_lst **a, t_lst **b);

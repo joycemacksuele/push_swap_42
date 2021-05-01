@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/05/01 00:13:09 by whoami           ###   ########.fr       */
+/*   Updated: 2021/05/02 00:46:04 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ static int	do_pb(t_lst **a, t_lst **b, int track_of_pb)
 	return (track_of_pb + 1);
 }
 
-static void	check_end_of_lst_100(t_lst **a, t_lst **b, int mid_nb,
-		int track_of_ra_rra, int track_of_pb) IT'S TOOO BIGGG 
+static void	check_end_of_lst_100(t_lst **a, t_lst **b, int mid_nb, t_dumb track)
 {
 	t_lst	*end_a;
 
@@ -33,9 +32,9 @@ static void	check_end_of_lst_100(t_lst **a, t_lst **b, int mid_nb,
 	while (end_a->nb < mid_nb)
 	{
 		rra(a, 1);
-		track_of_ra_rra++;
+		track.ra_or_rra++;
 		pb(a, b, 1);
-		track_of_pb++;
+		track.pa_or_pb++;
 		end_a = lstlast((*a));
 	}
 }
@@ -49,28 +48,28 @@ static void	check_end_of_lst_100(t_lst **a, t_lst **b, int mid_nb,
  * the top of the list, and loop again (now with a wanted number on top of a).
  */
 
-void	midpoint_sort_a_100(t_lst **a, t_lst **b, int mid_nb)
+void	midpoint_sort_a_100(t_lst **a, t_lst **b, int mid_nb, t_dumb track_of)
 {
 	int		len_a;
 	int		len;
-	int		track_of_pb;
-	int		track_of_ra_rra;
+//	int		track_of_pb;
+//	int		track_of_ra_rra;
 
 	len_a = lstlen(a) / 2;
 	len = lstlen(a) / 2;
-	track_of_pb = 0;
-	track_of_ra_rra = 0;
+	track_of.pa_or_pb = 0;
+	track_of.ra_or_rra = 0;
 	while (len--)
 	{
 		while ((*a)->nb < mid_nb)
-			track_of_pb = do_pb(a, b, track_of_pb);
+			track_of.pa_or_pb = do_pb(a, b, track_of.pa_or_pb);
 		if ((*a)->nb >= mid_nb)
 		{
-			check_end_of_lst_100(a, b, mid_nb, track_of_ra_rra, track_of_pb);
-			while ((*a)->nb >= mid_nb && track_of_ra_rra < len_a)
+			check_end_of_lst_100(a, b, mid_nb, track_of);
+			while ((*a)->nb >= mid_nb && track_of.ra_or_rra < len_a)
 			{
 				ra(a, 1);
-				track_of_ra_rra++;
+				track_of.ra_or_rra++;
 			}
 		}
 	}
@@ -104,7 +103,10 @@ void	sort_max_100(t_lst **a, t_lst **b)
 	char	**saved_a;
 	char	**sorted_a;
 	int		mid_nb_a;
+	t_dumb	track_of;
 
+	track_of.pa_or_pb = 0;
+	track_of.ra_or_rra = 0;
 	while ((*a)->next->next)
 	{
 		saved_a = save_stack_to_array(a, lstlen(a));
@@ -116,7 +118,7 @@ void	sort_max_100(t_lst **a, t_lst **b)
 		mid_nb_a = find_mid_nb(sorted_a);
 	//	if ((mid_nb_a = find_mid_nb(sorted_a)) == -1)
 		//	return ;
-		midpoint_sort_a_100(a, b, mid_nb_a);
+		midpoint_sort_a_100(a, b, mid_nb_a, track_of);
 		ft_freetab(saved_a);
 	}
 }
