@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/30 03:16:11 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/05/01 00:04:48 by whoami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 
 void	before_check_next_2_numbers(t_lst **a, t_lst **b)
 {
-	if ((*a) && ((*a)->next && (*a)->nb > (*a)->next->nb) &&
-		((*b)->next && (*b)->nb < (*b)->next->nb))
+	if ((*a) && ((*a)->next && (*a)->nb > (*a)->next->nb)
+		&& ((*b)->next && (*b)->nb < (*b)->next->nb))
 		ss(a, b, 1);
 	else if ((*a)->nb > (*a)->next->nb)
 		sa(a, 1);
@@ -55,7 +55,7 @@ void	rotate_b(t_lst **b, int i1, int i2)
  * It searches the second biggest number on the stack b and also get it's index.
  */
 
-int	 bigger_nb_2(t_lst **b, int bigger1, int *bigger2)
+int	bigger_nb_2(t_lst **b, int bigger1, int *bigger2)
 {
 	t_lst	*head;
 	int		i2;

@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:55:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/23 03:59:06 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/05/01 00:05:36 by whoami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int	not_int(char **av)
 		i++;
 	}
 	return (0);
-
 }
 
 int	handle_wrong_ac(int ac)

@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/05/01 03:27:24 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/05/01 00:13:09 by whoami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
  * 25 lines.
  */
 
-static int do_pb(t_lst **a, t_lst **b, int track_of_pb)
+static int	do_pb(t_lst **a, t_lst **b, int track_of_pb)
 {
 	pb(a, b, 1);
 	return (track_of_pb + 1);
 }
 
 static void	check_end_of_lst_100(t_lst **a, t_lst **b, int mid_nb,
-			int track_of_ra_rra, int track_of_pb)
+		int track_of_ra_rra, int track_of_pb) IT'S TOOO BIGGG 
 {
 	t_lst	*end_a;
 
@@ -107,12 +107,15 @@ void	sort_max_100(t_lst **a, t_lst **b)
 
 	while ((*a)->next->next)
 	{
-		if ((saved_a = save_stack_to_array(a, lstlen(a))) == NULL)
-			return ;
-		if ((sorted_a = sort_array(&saved_a[0])) == NULL)
-			return ;
-		if ((mid_nb_a = find_mid_nb(sorted_a)) == -1)
-			return ;
+		saved_a = save_stack_to_array(a, lstlen(a));
+	//	if ((saved_a = save_stack_to_array(a, lstlen(a))) == NULL)
+		//	return ;
+		sorted_a = sort_array(&saved_a[0]);
+	//	if ((sorted_a = sort_array(&saved_a[0])) == NULL)
+		//	return ;
+		mid_nb_a = find_mid_nb(sorted_a);
+	//	if ((mid_nb_a = find_mid_nb(sorted_a)) == -1)
+		//	return ;
 		midpoint_sort_a_100(a, b, mid_nb_a);
 		ft_freetab(saved_a);
 	}

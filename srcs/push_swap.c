@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/05/01 02:37:18 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/05/01 00:07:11 by whoami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,13 @@ void	pick_algo(t_lst **a, t_lst **b, int ac)
 			sort_max_100(a, b);
 		else
 			sort_max_500(a, b);
-		if (((*a)->next && (*a)->nb > (*a)->next->nb) &&
-			((*b)->next && (*b)->nb < (*b)->next->nb))
+		if (((*a)->next && (*a)->nb > (*a)->next->nb)
+			&& ((*b)->next && (*b)->nb < (*b)->next->nb))
 			ss(a, b, 1);
 		else if ((*a)->next && (*a)->nb > (*a)->next->nb)
 			sa(a, 1);
 		from_b_to_a(a, b, track_of);
 	}
-
 }
 
 int	main(int ac, char **av)

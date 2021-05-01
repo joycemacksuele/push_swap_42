@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/05/01 03:29:15 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/05/01 00:16:18 by whoami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,10 @@ void	sort_max_5(t_lst **a, t_lst **b)
 	int		len;
 	int		i;
 
-	while (lst_is_sort((*a), 0) == -1 && (len = lstlen(a)) > 3)
+	while (/*lst_is_sort((*a), 0) == -1 && */(len = lstlen(a)) > 3)
 	{
+		if (lst_is_sort((*a), 0) == 0);
+			break ;
 		a_tmp = (*a);
 		i = 0;
 		i = search_lower_number(&a_tmp, -1, -1);
@@ -92,14 +94,14 @@ void	sort_max_3(t_lst **a)
 	{
 		while (lst_is_sort((*a), 0) == -1)
 		{
-			if ((*a)->nb > (*a)->next->nb &&
-			(*a)->nb > (*a)->next->next->nb)
+			if ((*a)->nb > (*a)->next->nb
+				&& (*a)->nb > (*a)->next->next->nb)
 				ra(a, 1);
-			else if ((*a)->nb < (*a)->next->nb &&
-			(*a)->next->nb > (*a)->next->next->nb)
+			else if ((*a)->nb < (*a)->next->nb
+				&& (*a)->next->nb > (*a)->next->next->nb)
 				rra(a, 1);
-			if ((*a)->nb > (*a)->next->nb &&
-			(*a)->nb < (*a)->next->next->nb)
+			if ((*a)->nb > (*a)->next->nb
+				&& (*a)->nb < (*a)->next->next->nb)
 				sa(a, 1);
 		}
 	}

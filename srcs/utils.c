@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:56:28 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/30 03:57:08 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/05/01 00:23:49 by whoami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	**sort_array(char **a_or_b)
 		i = 0;
 		while (a_or_b[i] != NULL)
 		{
-			if (a_or_b[i + 1] && ft_atoi(a_or_b[i]) > ft_atoi(a_or_b[i+1]))
+			if (a_or_b[i + 1] && ft_atoi(a_or_b[i]) > ft_atoi(a_or_b[i + 1]))
 			{
 				tmp = a_or_b[i];
 				a_or_b[i] = a_or_b[i + 1];
@@ -130,8 +130,8 @@ int	is_sort(char **av, int error)
 	(void)error;
 	if (av)
 	{
-		if (av[0] && (ft_strcmp(av[0], "./push_swap") == 0 ||
-			ft_strcmp(av[0], "./checker") == 0))
+		if (av[0] && (ft_strcmp(av[0], "./push_swap") == 0
+				|| ft_strcmp(av[0], "./checker") == 0))
 			i = 1;
 		while (av[i])
 		{

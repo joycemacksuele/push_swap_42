@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/05/01 03:36:16 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/05/01 00:19:14 by whoami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ static int	ft_nbnb(t_lst **a, char **chunk, char **two_last_nbs)
 	ret_itoa = ft_itoa((*a)->nb);
 	while (chunk[i])
 	{
-		if (ft_strcmp(ret_itoa, chunk[i]) == 0 &&
-			(*a)->nb != ft_atoi(two_last_nbs[0]) &&
-			(*a)->nb != ft_atoi(two_last_nbs[1]))
+		if (ft_strcmp(ret_itoa, chunk[i]) == 0
+			&& (*a)->nb != ft_atoi(two_last_nbs[0])
+			&& (*a)->nb != ft_atoi(two_last_nbs[1]))
 		{
 			free(ret_itoa);
 			return (0);
@@ -82,8 +82,8 @@ void	midpoint_sort_a_500(t_lst **a, t_lst **b, int l_chunk, t_dumb d)
 		if ((*a) && ft_nbnb(a, d.chunk, d.pnbs) == -1)
 		{
 			end_a = lstlast((*a));
-			while (end_a && t_pb < l_chunk &&
-				ft_nbnb(&end_a, d.chunk, d.pnbs) == 0)
+			while (end_a && t_pb < l_chunk
+				&& ft_nbnb(&end_a, d.chunk, d.pnbs) == 0)
 			{
 				t_ra_rra = do_operation(a, b, "rra", t_ra_rra);
 				t_pb = do_operation(a, b, "pb", t_pb);
@@ -129,10 +129,12 @@ void	sort_max_500(t_lst **a, t_lst **b)
 	dumb.chunk = NULL;
 	while ((*a)->next->next)
 	{
-		if ((saved_a = save_stack_to_array(a, lstlen(a))) == NULL)
-			return ;
-		if ((sorted_a = sort_array(&saved_a[0])) == NULL)
-			return ;
+		saved_a = save_stack_to_array(a, lstlen(a));
+	//	if ((saved_a = save_stack_to_array(a, lstlen(a))) == NULL)
+	//		return ;
+	//	if ((sorted_a = sort_array(&saved_a[0])) == NULL)
+	//		return ;
+		sorted_a = sort_array(&saved_a[0]);
 		dumb.chunk = get_chunk_from_smaller_nb(sorted_a, lstlen(a), l_chunk_a);
 		dumb.pnbs[0] = sorted_a[lstlen(a) - 2];
 		dumb.pnbs[1] = sorted_a[lstlen(a) - 1];

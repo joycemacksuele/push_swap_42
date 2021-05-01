@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 02:13:20 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/05/01 03:38:17 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/05/01 00:20:49 by whoami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 void	print_lists(t_lst **a, t_lst **b)
 {
-	t_lst *tmp;
-	t_lst *btmp;
+	t_lst	*tmp;
+	t_lst	*btmp;
 	int		i;
 
 	tmp = (*a);
@@ -89,7 +89,6 @@ void	sb(t_lst **b, int fd)
 
 void	ss(t_lst **a, t_lst **b, int fd)
 {
-
 	if ((*a)->next && (*b)->next)
 	{
 		sa(a, 0);

@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/04/30 03:30:54 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/05/01 00:06:18 by whoami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	create_lists(char *opt, char **av)
 		run_operations_on_stacks(*lines, &a, &b);
 		lines++;
 	}
-	if (lst_is_sort(a ,0) == 0 && !b)
+	if (lst_is_sort(a, 0) == 0 && !b)
 		ft_putstr_fd("OK\n", 1);
 	else
 		ft_putstr_fd("KO\n", 1);
@@ -119,10 +119,12 @@ int	read_operations(char **av)
 	char	*opt;
 	int		ret_gnl;
 
-	line = NULL;
+	//line = NULL;
 	opt = ft_strdup("");
-	while ((ret_gnl = get_next_line(0, &line)) > 0)
+	ret_gnl = 1;
+	while (ret_gnl > 0)
 	{
+		ret_gnl = get_next_line(0, &line);
 		if (check_operations(line) == -1)
 		{
 			free(opt);
@@ -137,8 +139,8 @@ int	read_operations(char **av)
 	if (ret_gnl == 0)
 		create_lists(opt, av);
 	ft_strdel(&opt);
-	if (ret_gnl == -1)
-		return (-1);
+	//if (ret_gnl == -1)
+	//	return (-1);
 	return (0);
 }
 
@@ -148,8 +150,8 @@ int	main(int ac, char **av)
 		return (-1);
 	else if (ac >= 2)
 	{
-		if (not_int(av) == -1 || find_doubles(av) == -1 ||
-			read_operations(av) == -1)
+		if (not_int(av) == -1 || find_doubles(av) == -1
+			|| read_operations(av) == -1)
 		{
 			ft_putstr_fd("Error\n", 2);
 			return (-1);
