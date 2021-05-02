@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/05/01 00:19:14 by whoami           ###   ########.fr       */
+/*   Updated: 2021/05/02 02:08:45 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,11 +130,11 @@ void	sort_max_500(t_lst **a, t_lst **b)
 	while ((*a)->next->next)
 	{
 		saved_a = save_stack_to_array(a, lstlen(a));
-	//	if ((saved_a = save_stack_to_array(a, lstlen(a))) == NULL)
-	//		return ;
-	//	if ((sorted_a = sort_array(&saved_a[0])) == NULL)
-	//		return ;
+		if (saved_a == NULL)
+			return ;
 		sorted_a = sort_array(&saved_a[0]);
+		if (sorted_a == NULL)
+			return ;
 		dumb.chunk = get_chunk_from_smaller_nb(sorted_a, lstlen(a), l_chunk_a);
 		dumb.pnbs[0] = sorted_a[lstlen(a) - 2];
 		dumb.pnbs[1] = sorted_a[lstlen(a) - 1];

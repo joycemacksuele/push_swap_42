@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/05/02 00:46:04 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/05/02 02:02:35 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ void	midpoint_sort_a_100(t_lst **a, t_lst **b, int mid_nb, t_dumb track_of)
 {
 	int		len_a;
 	int		len;
-//	int		track_of_pb;
-//	int		track_of_ra_rra;
 
 	len_a = lstlen(a) / 2;
 	len = lstlen(a) / 2;
@@ -110,14 +108,14 @@ void	sort_max_100(t_lst **a, t_lst **b)
 	while ((*a)->next->next)
 	{
 		saved_a = save_stack_to_array(a, lstlen(a));
-	//	if ((saved_a = save_stack_to_array(a, lstlen(a))) == NULL)
-		//	return ;
+		if (saved_a == NULL)
+			return ;
 		sorted_a = sort_array(&saved_a[0]);
-	//	if ((sorted_a = sort_array(&saved_a[0])) == NULL)
-		//	return ;
+		if (sorted_a == NULL)
+			return ;
 		mid_nb_a = find_mid_nb(sorted_a);
-	//	if ((mid_nb_a = find_mid_nb(sorted_a)) == -1)
-		//	return ;
+		if (mid_nb_a == -1)
+			return ;
 		midpoint_sort_a_100(a, b, mid_nb_a, track_of);
 		ft_freetab(saved_a);
 	}
