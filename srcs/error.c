@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:55:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/05/01 00:05:36 by whoami           ###   ########.fr       */
+/*   Updated: 2021/05/02 02:45:34 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	not_int(char **av)
 		nb = ft_long_long_atoi(av[i]);
 		while (++j < ft_strlen(av[i]))
 		{
-			if (av[i][j] == '-' || av[i][j] == '+')
+			if ((av[i][0] == '-' || av[i][0] == '+') && av[i][1])
 				j++;
 			if (av[i][j] && !(ft_isdigit(av[i][j])))
 				return (-1);
