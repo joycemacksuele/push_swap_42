@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 02:13:20 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/05/01 00:07:52 by whoami           ###   ########.fr       */
+/*   Updated: 2021/06/10 18:06:29 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	rrr(t_lst **a, t_lst **b, int fd)
 		rra(a, 0);
 		rrb(b, 0);
 	}
-	//print_lists(a, b);
 	if (fd == 1)
 		ft_putstr_fd("rrr\n", fd);
 }
@@ -55,7 +54,6 @@ void	rra(t_lst **a, int fd)
 	last->next = NULL;
 	new->next = (*a);
 	(*a) = new;
-	//print_lists(a, NULL);
 	if (fd == 1)
 		ft_putstr_fd("rra\n", fd);
 }
@@ -75,7 +73,6 @@ void	rrb(t_lst **b, int fd)
 	last->next = NULL;
 	new->next = (*b);
 	(*b) = new;
-	//print_lists(NULL, b);
 	if (fd == 1)
 		ft_putstr_fd("rrb\n", fd);
 }

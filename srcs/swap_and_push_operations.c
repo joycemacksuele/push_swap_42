@@ -6,47 +6,11 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 02:13:20 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/05/01 00:20:49 by whoami           ###   ########.fr       */
+/*   Updated: 2021/06/11 15:25:18 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-/*
- * Funtion only for test purposes.
- */
-
-void	print_lists(t_lst **a, t_lst **b)
-{
-	t_lst	*tmp;
-	t_lst	*btmp;
-	int		i;
-
-	tmp = (*a);
-	btmp = (*b);
-	i = 1;
-	while (tmp)
-	{
-		while (i-- >= 0)
-		{
-			printf("a = %d		", tmp->nb);
-			if (!btmp)
-				printf("\n");
-		}
-		if (btmp)
-		{
-			printf("		b = %d\n", btmp->nb);
-			btmp = btmp->next;
-		}
-		tmp = tmp->next;
-	}
-	while (btmp)
-	{
-		printf("					b = %d\n", btmp->nb);
-		btmp = btmp->next;
-	}
-	printf("\n---------------------------------------------------\n");
-}
 
 /*
  * sa or sb: swap -> swap the first 2 elements at the top of stack.
@@ -55,9 +19,8 @@ void	print_lists(t_lst **a, t_lst **b)
 
 void	sa(t_lst **a, int fd)
 {
-	int		tmp;
+	int	tmp;
 
-	//print_lists(a, 0);
 	if ((*a))
 	{
 		tmp = (*a)->nb;
@@ -70,9 +33,8 @@ void	sa(t_lst **a, int fd)
 
 void	sb(t_lst **b, int fd)
 {
-	int		tmp;
+	int	tmp;
 
-	//print_lists(0, b);
 	if ((*b))
 	{
 		tmp = (*b)->nb;
@@ -94,7 +56,6 @@ void	ss(t_lst **a, t_lst **b, int fd)
 		sa(a, 0);
 		sb(b, 0);
 	}
-	//print_lists(a, b);
 	if (fd == 1)
 		ft_putstr_fd("ss\n", fd);
 }
@@ -123,7 +84,6 @@ void	pb(t_lst **a, t_lst **b, int fd)
 		tmp->next = NULL;
 		lstadd_front(b, tmp);
 		(*a) = save_head_a;
-		//print_lists(a, b);
 		if (fd == 1)
 			ft_putstr_fd("pb\n", fd);
 	}
@@ -149,7 +109,6 @@ void	pa(t_lst **a, t_lst **b, int fd)
 		tmp->next = NULL;
 		lstadd_front(a, tmp);
 		(*b) = save_head_b;
-		//print_lists(a, b);
 		if (fd == 1)
 			ft_putstr_fd("pa\n", fd);
 	}
