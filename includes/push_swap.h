@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 02:13:33 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/05/02 01:32:31 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/06/12 17:08:23 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,6 @@ typedef struct s_dumb
 	char	**chunk;
 	char	*pnbs[2];
 }			t_dumb;
-
-/*
- * ONLY for test purposes
- */
-void			print_lists(t_lst **a, t_lst **b);
 
 /*
  * push_swap
