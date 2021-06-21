@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:56:28 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/05/01 00:23:49 by whoami           ###   ########.fr       */
+/*   Updated: 2021/06/21 20:54:48 by whoami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ char	**save_stack_to_array(t_lst **a_or_b, int len)
 	t_lst	*tmp;
 	int		i;
 
-	saved = (char **)malloc(sizeof(char *) * (len + 1));
+	if (!(saved = (char **)malloc(sizeof(char *) * (len + 1))))
+		return (NULL);
 	itoa = NULL;
 	tmp = (*a_or_b);
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/05/02 02:08:45 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/06/21 20:55:40 by whoami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ char	**get_chunk_from_smaller_nb(char **sorted_a, int len_a, int len_chunk_a)
 	int		j;
 
 	chunk = (char **)malloc(sizeof(char *) * (len_chunk_a + 1));
+	if (!chunk)
+		return (NULL);
 	i = 0;
 	j = 0;
 	if (len_a < len_chunk_a)
