@@ -6,7 +6,7 @@
 #    By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/19 00:38:15 by jfreitas          #+#    #+#              #
-#    Updated: 2021/04/30 03:32:38 by jfreitas         ###   ########.fr        #
+#    Updated: 2021/06/12 17:09:45 by jfreitas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,7 +102,6 @@ clean:
 	@echo "$(END)$(YELLOW)Removing $(NAME2) object file$(END)"
 	@rm -rf $(OBJPATH)
 	@rm -rf $(OBJS_CHECKER)
-#	@echo "$(END)$(YELLOW)Removing libft object files$(END)"
 	@make clean -C $(LIBFTPATH)
 
 fclean: clean
@@ -110,7 +109,6 @@ fclean: clean
 	@echo "$(END)$(YELLOW)\nRemoving $(NAME2) binary$(END)"
 	@rm -f $(NAME1)
 	@rm -f $(NAME2)
-#	@echo "$(END)$(YELLOW)\nRemoving libft.a$(END)"
 	@make fclean -C $(LIBFTPATH)
 
 re: fclean all

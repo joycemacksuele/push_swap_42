@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 00:08:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/05/02 00:38:16 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/06/11 23:35:26 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@
 
 void	from_b_to_a(t_lst **a, t_lst **b, t_dumb track_of)
 {
-	int		bigger1;
-	int		bigger2;
-	int		i1;
-	int		i2;
+	int	bigger1;
+	int	bigger2;
+	int	i1;
+	int	i2;
 
 	while ((*b))
 	{
 		track_of.pa_or_pb = 0;
 		i1 = bigger_nb(b, &bigger1);
 		i2 = bigger_nb_2(b, bigger1, &bigger2);
-		while (track_of.pa_or_pb < 2 && bigger1 && bigger2)
+		while (track_of.pa_or_pb < 2 && (bigger2 || bigger2 == 0))
 		{
 			if (if1(b, bigger1, bigger2) == 1 && if2(b, i1, i2) == 1)
 				sb(b, 1);

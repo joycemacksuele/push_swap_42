@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:55:21 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/05/02 02:45:34 by jfreitas         ###   ########.fr       */
+/*   Updated: 2021/06/10 18:04:44 by jfreitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	not_int(char **av)
 		}
 		if (nb > 2147483647 || nb < -2147483648 || ft_strlen(av[i]) > 11)
 		{
-		//	printf("bigger than int\n");
+			printf("bigger than int\n");
 			return (-1);
 		}
 		i++;
@@ -77,11 +77,15 @@ int	not_int(char **av)
 	return (0);
 }
 
+/*
+ * Optional error message:
+ *	ft_putstr_fd("More than 1 signed integer argument needed!\n", 2);
+ */
+
 int	handle_wrong_ac(int ac)
 {
 	if (ac <= 1)
 	{
-	//	ft_putstr_fd("More than 1 signed integer argument needed!\n", 2);
 		return (-1);
 	}
 	return (0);

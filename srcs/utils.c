@@ -6,7 +6,7 @@
 /*   By: jfreitas <jfreitas@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:56:28 by jfreitas          #+#    #+#             */
-/*   Updated: 2021/06/21 20:54:48 by whoami           ###   ########.fr       */
+/*   Updated: 2021/06/21 20:59:31 by whoami           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,10 @@ char	**save_stack_to_array(t_lst **a_or_b, int len)
  * Obs.: atoi can be used because if has already passed the error functions,
  * so if itgot here, it means that the arguments are indeed not duplicated
  * signed intergers.
+ *
+ * Optional error statement:
+ *	if (error == -1)
+ *		ft_putstr_fd("Numbers are already sorted!\n", 2);
  */
 
 int	is_sort(char **av, int error)
@@ -140,8 +144,6 @@ int	is_sort(char **av, int error)
 				return (-1);
 			i++;
 		}
-	//	if (error == -1)
-			//ft_putstr_fd("Numbers are already sorted!\n", 2);
 	}
 	return (0);
 }
